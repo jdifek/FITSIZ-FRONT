@@ -42,14 +42,14 @@ export default {
   registerUser: (telegramId: string, firstName: string): Promise<User> =>
     api.post("/register", { telegramId, firstName }),
   
-  getUser: (telegramId: number): Promise<UserType> =>
+  getUser: (telegramId: string): Promise<UserType> =>
     api.get(`/user/${telegramId}`),
   getMasks: (): Promise<masksType[]> => api.get("/masks"),
   getCatalog: () => api.get("/catalog"),
   getVideos: (): Promise<videosType[]> =>
     api.get<videosType[]>("/videos").then((response) => response.data),
   updateProfile: (
-    telegramId: number,
+    telegramId: string,
     phone: string,
     email: string,
     maskId: number

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api, { type masksType } from "../api/api";
-import { useUserContext} from "../../context/AuthContext";
+import { useUserContext } from "../../context/AuthContext";
 
 const ProfilePage: React.FC = () => {
   const { user, setUser } = useUserContext();
@@ -16,7 +16,7 @@ const ProfilePage: React.FC = () => {
     if (user?.telegramId) {
       setLoading(true);
       api
-        .getUser(parseInt(user.telegramId))
+        .getUser(user.telegramId.toString())
         .then((fetchedUser) => {
           setPhone(fetchedUser.phone || "");
           setEmail(fetchedUser.email || "");
@@ -54,8 +54,8 @@ const ProfilePage: React.FC = () => {
     if (user && user.telegramId && selectedMaskId) {
       setLoading(true);
       api
-        .updateProfile(parseInt(user.telegramId), phone, email, selectedMaskId)
-        .then(() => api.getUser(parseInt(user.telegramId))) // Получаем актуального пользователя
+        .updateProfile(user.telegramId.toString(), phone, email, selectedMaskId)
+        .then(() => api.getUser(user.telegramId.toString())) // Получаем актуального пользователя
         .then((updatedUser) => {
           console.log("Updated user:", updatedUser);
           setUser(updatedUser); // Обновляем состояние пользователя
