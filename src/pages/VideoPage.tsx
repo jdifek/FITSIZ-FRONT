@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import api, { type videosType } from '../api/api';
-import { useUserContext } from '../../context/AuthContext';
+// import api, { type videosType } from '../api/api';
+// import { useUserContext } from '../../context/AuthContext';
 
 const VideoPage: React.FC = () => {
-  const { user } = useUserContext();
-  const [videos, setVideos] = useState<videosType[]>([]);
+  // const { user } = useUserContext();
+  // const [videos, setVideos] = useState<videosType[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) {
-      api.getVideos().then((data) => setVideos(data));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     api.getVideos().then((data) => setVideos(data));
+  //   }
+  // }, [user]);
 
   return (
     <div className="text-center mt-4">

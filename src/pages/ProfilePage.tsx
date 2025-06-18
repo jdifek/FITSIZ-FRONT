@@ -113,7 +113,7 @@ const ProfilePage: React.FC = () => {
             Обновить
           </button>
           <button
-            className="px-6 py-3 bg-red-200 text-gray-700 rounded-lg hover:bg-red-300 transition duration-300 shadow-md"
+            className="px-6 py-3 bg-red-200 text-white  rounded-lg hover:bg-red-300 transition duration-300 shadow-md"
             onClick={() => navigate("/welcome")}
           >
             Назад
