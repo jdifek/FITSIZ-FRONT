@@ -30,29 +30,22 @@ export type masksType = {
   id: number;
   name: string;
 };
-
-export type profileType = {
-  id: number;
-  telegramId: string;
-  firstName: string;
-  phone: string;
-  maskId: number;
-  email: string;
-  createdAt: string; // или Date, если вы будете парсить строку в объект Date
+export type UserType = {
+  telegramId: string; // или number, смотрите, как хранится
+  phone?: string;
+  email?: string;
+  maskId?: number | null;
+  // другие поля пользователя, если есть
 };
 
 export default {
   registerUser: (telegramId: string, firstName: string): Promise<User> =>
-    api
-      .post<User>("/register", { telegramId, firstName })
-      .then((res) => res.data),
-
-  getUser: (telegramId: number): Promise<profileType> =>
-    api.get<profileType>(`/user/${telegramId}`).then((res) => res.data),
-
-  getMasks: (): Promise<masksType[]> =>
-    api.get<masksType[]>("/masks").then(res => res.data),
-    getCatalog: () => api.get("/catalog"),
+    api.post("/register", { telegramId, firstName }),
+  
+  getUser: (telegramId: number): Promise<UserType> =>
+    api.get(`/user/${telegramId}`),
+  getMasks: (): Promise<masksType[]> => api.get("/masks"),
+  getCatalog: () => api.get("/catalog"),
   getVideos: (): Promise<videosType[]> =>
     api.get<videosType[]>("/videos").then((response) => response.data),
   updateProfile: (

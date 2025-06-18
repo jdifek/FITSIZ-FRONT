@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api, { type masksType } from "../api/api";
-import { useUserContext, type User } from "../../context/AuthContext";
+import { useUserContext} from "../../context/AuthContext";
 
 const ProfilePage: React.FC = () => {
   const { user, setUser } = useUserContext();
@@ -58,7 +58,7 @@ const ProfilePage: React.FC = () => {
         .then(() => api.getUser(parseInt(user.telegramId))) // Получаем актуального пользователя
         .then((updatedUser) => {
           console.log("Updated user:", updatedUser);
-          setUser(updatedUser as User); // Обновляем состояние пользователя
+          setUser(updatedUser); // Обновляем состояние пользователя
           navigate("/welcome");
         })
         .catch((error) => console.error("Ошибка обновления профиля:", error))
