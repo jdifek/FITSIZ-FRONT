@@ -16,7 +16,7 @@ const App: React.FC = () => (
         <header className="w-full bg-green-600 text-white p-6 text-center shadow-md">
           <h1 className="text-2xl font-bold tracking-wide">FITSIZ</h1>
         </header>
-        <div className="flex flex-col items-center justify-start p-6 max-w-md mx-auto min-h-[calc(100vh-225px)]">
+        <div className="flex flex-col items-center justify-start p-6 max-w-md mx-auto min-h-[calc(100vh-225px + 60px)]">
           <Routes>
             <Route path="/" element={<AuthPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
