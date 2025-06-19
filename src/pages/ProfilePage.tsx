@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api, { type masksType } from "../api/api";
 import { useUserContext } from "../../context/AuthContext";
-import { FaUserCircle } from "react-icons/fa"; // иконка профиля
+import { FaUserCircle } from "react-icons/fa";
 
 const ProfilePage: React.FC = () => {
   const { user, setUser } = useUserContext();
@@ -64,78 +64,82 @@ const ProfilePage: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="text-center text-gray-600">Загрузка...</div>;
+    return <div className="text-center text-gray-600 mt-20">Загрузка...</div>;
   }
 
   const currentMaskName = masks.find((m) => m.id === selectedMaskId)?.name;
 
   return (
-    <div className="text-center space-y-6 px-4 py-8">
-      {/* Аватар и имя */}
-      <div className="flex flex-col items-center space-y-2">
-        <FaUserCircle className="text-green-600" size={72} />
-        <h2 className="text-2xl font-bold text-green-600">Профиль</h2>
-        <p className="text-sm text-gray-500">
-          {user?.first_name || "Пользователь"}, редактируйте свои данные
-        </p>
-      </div>
-
-      <div className="space-y-4 max-w-md mx-auto text-left">
-        <div>
-          <label className="text-sm font-medium text-gray-700">Телефон</label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
-            placeholder="+7..."
-          />
+    <div className="flex justify-center px-4 py-10">
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 space-y-6 border border-gray-200">
+        {/* Аватар */}
+        <div className="flex flex-col items-center space-y-3">
+          <div className="rounded-full bg-green-100 p-4 shadow-inner">
+            <FaUserCircle className="text-green-600" size={64} />
+          </div>
+          <h2 className="text-2xl font-bold text-green-700">Профиль</h2>
+          <p className="text-sm text-gray-500">
+            {user?.first_name || "Пользователь"}, настройте данные ниже
+          </p>
         </div>
 
-        <div>
-          <label className="text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
-            placeholder="example@mail.com"
-          />
+        {/* Поля */}
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-semibold text-gray-700">Телефон</label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+7..."
+              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-semibold text-gray-700">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="example@mail.com"
+              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-semibold text-gray-700">Маска</label>
+            <select
+              value={selectedMaskId || ""}
+              onChange={(e) => setSelectedMaskId(Number(e.target.value) || null)}
+              disabled={masks.length === 0}
+              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+            >
+              <option value="">Выберите маску</option>
+              {masks.map((mask) => (
+                <option key={mask.id} value={mask.id}>
+                  {mask.name}
+                </option>
+              ))}
+            </select>
+            {selectedMaskId && (
+              <p className="text-xs text-green-600 mt-1">
+                Текущая маска: <strong>{currentMaskName}</strong>
+              </p>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label className="text-sm font-medium text-gray-700">Маска</label>
-          <select
-            value={selectedMaskId || ""}
-            onChange={(e) => setSelectedMaskId(Number(e.target.value) || null)}
-            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
-            disabled={masks.length === 0}
-          >
-            <option value="">Выберите маску</option>
-            {masks.map((mask) => (
-              <option key={mask.id} value={mask.id}>
-                {mask.name}
-              </option>
-            ))}
-          </select>
-          {selectedMaskId && (
-            <p className="text-xs text-green-600 mt-1">
-              Текущая маска: <strong>{currentMaskName}</strong>
-            </p>
-          )}
-        </div>
-
-        <div className="flex gap-4 justify-center pt-4">
+        {/* Кнопки */}
+        <div className="flex justify-center gap-4 pt-4">
           <button
             onClick={handleUpdate}
             disabled={!selectedMaskId || !user?.telegramId}
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-md disabled:opacity-50"
+            className=" text-white px-6 py-3 rounded-xl shadow-md hover:scale-105 transition disabled:opacity-50"
           >
             Обновить
           </button>
           <button
             onClick={() => navigate("/welcome")}
-            className="px-6 py-3 bg-gray-300 text-white rounded-lg hover:bg-gray-400 transition duration-300 shadow-md"
+            className=" text-white px-6 py-3 rounded-xl hover:bg-gray-300 transition"
           >
             Назад
           </button>

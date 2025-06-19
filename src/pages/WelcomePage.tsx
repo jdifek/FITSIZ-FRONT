@@ -1,14 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
-
-// Импорт иконок
-import {
-  FaUser,
-  FaVideo,
-  FaMask,
-  FaList,
-} from "react-icons/fa";
+import { FaUser, FaVideo, FaMask, FaList } from "react-icons/fa";
 
 const WelcomePage: React.FC = () => {
   const { user } = useUserContext();
@@ -17,50 +10,54 @@ const WelcomePage: React.FC = () => {
   const buttons = [
     {
       label: "Моя маска",
-      icon: <FaMask className="mr-2" />,
+      icon: <FaMask className="text-2xl text-green-600" />,
       path: "/mask",
+      color: "from-green-400 to-green-600",
     },
     {
       label: "Каталог",
-      icon: <FaList className="mr-2" />,
+      icon: <FaList className="text-2xl text-green-600" />,
       path: "/catalog",
+      color: "from-blue-400 to-blue-600",
     },
     {
       label: "Видео",
-      icon: <FaVideo className="mr-2" />,
+      icon: <FaVideo className="text-2xl text-green-600" />,
       path: "/video",
+      color: "from-purple-400 to-purple-600",
     },
     {
       label: "Профиль",
-      icon: <FaUser className="mr-2" />,
+      icon: <FaUser className="text-2xl text-green-600" />,
       path: "/profile",
+      color: "from-yellow-400 to-yellow-600",
     },
   ];
 
   return (
-    <div className="">
-      {/* Основной контент */}
-      <div className="text-center mt-8">
-        <p className="text-2xl font-bold text-green-600">
-          Привет, {user?.first_name || "Гость"}!
+    <div className="px-4 py-10 max-w-md mx-auto">
+      {/* Приветствие */}
+      <div className="text-center mb-10">
+        <h2 className="text-3xl font-extrabold text-green-600">Привет, {user?.first_name || "Гость"}!</h2>
+        <p className="mt-2 text-gray-500 text-sm">
+          Добро пожаловать в <strong className="text-green-700">FITSIZ</strong> — выбери, куда пойти!
         </p>
+      </div>
 
-        <p className="mt-2 text-gray-600 text-sm">
-          Добро пожаловать в наше приложение! Выберите нужный раздел ниже.
-        </p>
-
-        <div className="mt-6 space-y-2 flex flex-col items-center">
-          {buttons.map(({ label, icon, path }) => (
-            <button
-              key={label}
-              onClick={() => navigate(path)}
-              className="flex items-center px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200"
-            >
+      {/* Секция кнопок */}
+      <div className="grid grid-cols-1 gap-5">
+        {buttons.map(({ label, icon, path, color }) => (
+          <div
+            key={label}
+            onClick={() => navigate(path)}
+            className={`flex items-center gap-4 p-4 rounded-2xl shadow-lg cursor-pointer bg-gradient-to-br ${color} transition-transform hover:scale-[1.02] active:scale-[0.98]`}
+          >
+            <div className="bg-white rounded-full p-3 shadow-inner">
               {icon}
-              {label}
-            </button>
-          ))}
-        </div>
+            </div>
+            <div className="text-white font-semibold text-lg">{label}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
