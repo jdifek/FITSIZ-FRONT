@@ -1,7 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api, { type masksType } from '../api/api';
-import { useUserContext } from '../../context/AuthContext';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/AuthContext";
+
+type masksType = {
+  id: number;
+  name: string;
+  imageUrl?: string;
+  price?: string;
+};
+
+const mockMasks: masksType[] = [
+  {
+    id: 1,
+    name: "Автоматическая маска ESAB Sentinel A60",
+    imageUrl:
+      "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg",
+    price: "₽7999",
+  },
+  {
+    id: 2,
+    name: "Фиксированная сварочная маска",
+    imageUrl:
+      "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg",
+    price: "₽4499",
+  },
+  {
+    id: 3,
+    name: "Пассивная маска с фильтром",
+    imageUrl:
+      "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg",
+    price: "₽2999",
+  },
+];
 
 const MaskPage: React.FC = () => {
   const { user } = useUserContext();
@@ -10,28 +40,52 @@ const MaskPage: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      api.getMasks().then((data) => setMasks(data));
+      // Вместо реального API ставим моковые данные
+      setMasks(mockMasks);
     }
   }, [user]);
 
   return (
-    <div className="text-center mt-4">
-      <h2 className="text-xl font-bold">Мои маски</h2>
+    <div className="max-w-md mx-auto px-4 py-6">
+      <h2 className="text-2xl font-bold text-green-700 mb-6">Мои маски</h2>
+
       {masks.length > 0 ? (
-        <ul className="mt-4 space-y-2">
+        <div className="grid grid-cols-2 gap-4 mb-8">
           {masks.map((mask) => (
-            <li key={mask.id}>{mask.name}</li>
+            <div
+              key={mask.id}
+              className="bg-white border rounded-xl p-3 shadow-sm hover:shadow-md transition text-left"
+            >
+              {mask.imageUrl ? (
+                <img
+                  src={mask.imageUrl}
+                  alt={mask.name}
+                  className="w-full h-28 object-cover rounded-lg mb-2"
+                />
+              ) : (
+                <div className="w-full h-28 bg-gray-200 rounded-lg mb-2 flex items-center justify-center text-gray-400">
+                  Нет изображения
+                </div>
+              )}
+              <h4 className="text-sm font-medium text-gray-800">{mask.name}</h4>
+              {mask.price && (
+                <p className="text-sm text-gray-500">{mask.price}</p>
+              )}
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
-        <p>Заглушка для раздела "Моя маска"</p>
+        <p className="text-center text-gray-600">Здесь пока нет масок</p>
       )}
-      <button
-        className="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200"
-        onClick={() => navigate('/welcome')}
-      >
-        Назад
-      </button>
+
+      <div className="text-center mt-6">
+        <button
+          onClick={() => navigate("/welcome")}
+          className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+        >
+          Назад
+        </button>
+      </div>
     </div>
   );
 };
