@@ -15,7 +15,7 @@ const App: React.FC = () => (
       {/* Wrapper на всю высоту экрана */}
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans">
         {/* Хедер */}
-        <header className="w-full mt-15 bg-green-600 text-white p-6 text-center shadow-md">
+        <header className="w-full mt-20 bg-green-600 text-white p-6 text-center shadow-md">
           <h1 className="text-2xl font-bold tracking-wide">FITSIZ</h1>
         </header>
 
