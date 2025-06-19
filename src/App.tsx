@@ -15,7 +15,7 @@ const App: React.FC = () => (
       {/* Wrapper на всю высоту экрана */}
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans">
         {/* Хедер */}
-        <header className="w-full bg-green-600 text-white p-6 text-center shadow-md">
+        <header className="w-full mt-15 bg-green-600 text-white p-6 text-center shadow-md">
           <h1 className="text-2xl font-bold tracking-wide">FITSIZ</h1>
         </header>
 
@@ -32,7 +32,7 @@ const App: React.FC = () => (
         </main>
 
         {/* Футер */}
-        <footer className="py-4 bg-gray-100 text-gray-600 text-sm text-center w-full">
+        <footer className="py-4 pb-6 bg-gray-100 text-gray-600 text-sm text-center w-full">
           <div className="flex justify-center items-center gap-4">
             <div className="flex items-center gap-1">
               <FaInfoCircle />
