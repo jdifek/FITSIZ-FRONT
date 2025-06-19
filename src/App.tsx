@@ -12,11 +12,15 @@ import { FaInfoCircle, FaPhone } from "react-icons/fa";
 const App: React.FC = () => (
   <Router>
     <UserProvider>
-      <div className="mt-15 bg-white text-gray-900 font-sans">
+      {/* Wrapper на всю высоту экрана */}
+      <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans">
+        {/* Хедер */}
         <header className="w-full bg-green-600 text-white p-6 text-center shadow-md">
           <h1 className="text-2xl font-bold tracking-wide">FITSIZ</h1>
         </header>
-        <div className="flex flex-col items-center justify-start p-6 max-w-md mx-auto ">
+
+        {/* Контент (растягивается по высоте) */}
+        <main className="flex-1 flex flex-col items-center justify-start p-6 max-w-md mx-auto w-full">
           <Routes>
             <Route path="/" element={<AuthPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
@@ -25,9 +29,10 @@ const App: React.FC = () => (
             <Route path="/video" element={<VideoPage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
-        </div>
+        </main>
 
-        <footer className="mt-10 py-4 bg-gray-100 text-gray-600 text-sm text-center">
+        {/* Футер */}
+        <footer className="py-4 bg-gray-100 text-gray-600 text-sm text-center w-full">
           <div className="flex justify-center items-center gap-4">
             <div className="flex items-center gap-1">
               <FaInfoCircle />
