@@ -16,10 +16,10 @@ const App: React.FC = () => (
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans">
         {/* Хедер */}
         <header className="w-full mt-20 bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md ">
-          <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="max-w-4xl mx-auto px-4 py-2 flex justify-between items-center">
             {/* Логотип + Название */}
             <div className="flex items-center gap-3">
-              <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+              <h1 className="text-sm font-extrabold ">
                 FITSIZ
               </h1>
             </div>

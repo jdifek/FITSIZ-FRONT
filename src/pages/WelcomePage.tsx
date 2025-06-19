@@ -10,27 +10,27 @@ const WelcomePage: React.FC = () => {
   const buttons = [
     {
       label: "Моя маска",
-      icon: <FaMask className="text-2xl text-green-600" />,
+      icon: <FaMask className="text-2xl text-black" />,
       path: "/mask",
       color: "from-green-400 to-green-600",
     },
     {
       label: "Каталог",
-      icon: <FaList className="text-2xl text-green-600" />,
+      icon: <FaList className="text-2xl text-black" />,
       path: "/catalog",
-      color: "from-blue-400 to-blue-600",
+      color: "from-green-400 to-green-600",
     },
     {
       label: "Видео",
-      icon: <FaVideo className="text-2xl text-green-600" />,
+      icon: <FaVideo className="text-2xl text-black" />,
       path: "/video",
-      color: "from-purple-400 to-purple-600",
+      color: "from-green-400 to-green-600",
     },
     {
       label: "Профиль",
-      icon: <FaUser className="text-2xl text-green-600" />,
+      icon: <FaUser className="text-2xl text-black" />,
       path: "/profile",
-      color: "from-yellow-400 to-yellow-600",
+      color: "from-green-400 to-green-600",
     },
   ];
 
@@ -38,7 +38,7 @@ const WelcomePage: React.FC = () => {
     <div className="px-4 py-10 max-w-md mx-auto">
       {/* Приветствие */}
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-extrabold text-green-600">Привет, {user?.first_name || "Гость"}!</h2>
+        <h2 className="text-3xl font-extrabold text-green-700">Привет, {user?.first_name || "Гость"}!</h2>
         <p className="mt-2 text-gray-500 text-sm">
           Добро пожаловать в <strong className="text-green-700">FITSIZ</strong> — выбери, куда пойти!
         </p>
