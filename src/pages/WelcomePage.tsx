@@ -8,8 +8,6 @@ import {
   FaVideo,
   FaMask,
   FaList,
-  FaInfoCircle,
-  FaPhone,
 } from "react-icons/fa";
 
 const WelcomePage: React.FC = () => {
