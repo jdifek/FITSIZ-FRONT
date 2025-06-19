@@ -62,7 +62,6 @@ const AuthPage: React.FC = () => {
 
   return (
     <div className="text-center space-y-6">
-      <h1 className="text-3xl font-bold text-green-600">FITSIZ</h1>
       <p className="text-gray-600">Пожалуйста, авторизуйтесь через Telegram</p>
       <button
         className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-md"
