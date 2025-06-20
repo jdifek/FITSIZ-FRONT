@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Search, SlidersHorizontal, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 type ProductType = {
@@ -6,146 +7,235 @@ type ProductType = {
   name: string;
   price: string;
   imageUrl: string;
+  installment?: string;
+  size?: string;
+  days?: string;
 };
 
-const sharedImage = "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg";
+const sharedImage =
+  "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg";
 
 const popularProducts: ProductType[] = [
   {
     id: 1,
-    name: "Автоматическая маска",
-    price: "₽7999",
+    name: "Автоматическая маска ArcShield Pro",
+    price: "7 999₽",
+    installment: "2 000₽ x 4",
     imageUrl: sharedImage,
+    size: "37 EU",
+    days: "29 дней",
   },
   {
     id: 2,
-    name: "Фиксированная маска",
-    price: "₽4499",
+    name: "Фиксированная маска WeldMaster",
+    price: "4 499₽",
+    installment: "1 125₽ x 4",
     imageUrl: sharedImage,
+    size: "35.5 EU",
+    days: "17 дней",
   },
   {
     id: 3,
-    name: "Пассивная маска",
-    price: "₽2999",
+    name: "Пассивная маска BasicWeld",
+    price: "2 999₽",
+    installment: "750₽ x 4",
     imageUrl: sharedImage,
+    size: "36 EU",
+    days: "25 дней",
+  },
+  {
+    id: 4,
+    name: "Маска ProSafe Advanced",
+    price: "9 499₽",
+    installment: "2 375₽ x 4",
+    imageUrl: sharedImage,
+    size: "38 EU",
+    days: "15 дней",
   },
 ];
 
 const recommendedProducts: ProductType[] = [
   {
-    id: 4,
-    name: "Перчатки",
-    price: "₽1499",
-    imageUrl: sharedImage,
-  },
-  {
     id: 5,
-    name: "Куртка сварщика",
-    price: "₽2999",
+    name: "Перчатки WelderPro",
+    price: "1 499₽",
+    installment: "375₽ x 4",
     imageUrl: sharedImage,
+    size: "L",
+    days: "12 дней",
   },
   {
     id: 6,
-    name: "Очки защитные",
-    price: "₽799",
+    name: "Куртка сварщика SafeGuard",
+    price: "5 999₽",
+    installment: "1 500₽ x 4",
     imageUrl: sharedImage,
+    size: "XL",
+    days: "20 дней",
   },
 ];
 
 const CatalogPage: React.FC = () => {
-  const navigate = useNavigate();
-  const [filterOpen, setFilterOpen] = useState<string | null>(null);
+  const [likedItems, setLikedItems] = useState<Set<number>>(new Set());
+  const navigate = useNavigate(); // ← добавлено
 
-  const toggleFilter = (name: string) => {
-    setFilterOpen((prev) => (prev === name ? null : name));
+  const handleProductClick = (id: number) => {
+    console.log("Navigate to product:", id);
+    navigate(`/details/${id}`);
+  };
+
+  const toggleLike = (id: number) => {
+    setLikedItems((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-6">
-      <h2 className="text-2xl font-bold text-green-700 mb-4">Каталог</h2>
-
-      {/* Фильтры */}
-      <div className="flex flex-col justify-between gap-2 mb-6">
-        {['Цена', 'Популярное', 'Новинки'].map((label) => (
-          <div className="relative" key={label}>
-            <button
-              className="text-xs px-3 py-1.5 bg-green-600 text-white rounded-full shadow-sm hover:bg-green-700 transition"
-              onClick={() => toggleFilter(label)}
-            >
-              {label} ▼
-            </button>
-            {filterOpen === label && (
-              <div className="absolute left-0 mt-1 bg-white border  shadow-lg rounded-md text-sm z-10">
-                <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Опция 1</div>
-                <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Опция 2</div>
-              </div>
-            )}
+    <div className="max-w-md mx-auto bg-white min-h-screen">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-4">
+        <h1 className="!text-[24px] font-bold text-gray-900">Каталог</h1>
+        <div className="flex items-center gap-2">
+          <div className="w-9 h-9 bg-[#42BA1A] rounded-2xl flex items-center justify-center">
+            <Search className="w-4 h-4 text-white" />
           </div>
-        ))}
-      </div>
-
-      {/* Популярные маски */}
-      <h3 className="text-lg font-semibold mb-2">Популярные маски</h3>
-      <div className="grid grid-cols-2 gap-4 mb-8">
-        {popularProducts.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white border border-gray-300 rounded-xl p-3 shadow-sm hover:shadow-md transition text-left"
-          >
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className="w-full h-28 object-cover rounded-lg mb-2"
-            />
-            <h4 className="text-sm font-medium text-gray-800">{product.name}</h4>
-            <p className="text-sm text-gray-500">{product.price}</p>
+          <div className="w-9 h-9 bg-[#42BA1A] rounded-2xl flex items-center justify-center">
+            <SlidersHorizontal className="w-4 h-4 text-white" />
           </div>
-        ))}
-      </div>
-
-      {/* Инструкция */}
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-1">Инструкции</h3>
-        <p className="text-sm text-gray-600 mb-3">
-          Узнайте, как правильно использовать маску: от регулировки до хранения.
-        </p>
-        <div className="flex gap-2">
-          <img
-            src={sharedImage}
-            className="w-1/2 rounded-lg"
-            alt="инструкция 1"
-          />
-          <img
-            src={sharedImage}
-            className="w-1/2 rounded-lg"
-            alt="инструкция 2"
-          />
         </div>
       </div>
 
-      {/* Рекомендуемые товары */}
-      <h3 className="text-lg font-semibold mb-2">Рекомендуемое</h3>
-      <div className="grid grid-cols-3 gap-3 mb-8">
-        {recommendedProducts.map((item) => (
-          <div key={item.id} className="border rounded-xl border-gray-300 p-2 text-center bg-white shadow-sm">
-            <img
-              src={item.imageUrl}
-              alt={item.name}
-              className="w-full h-20 object-cover rounded-lg mb-1"
-            />
-            <p className="text-xs text-gray-700">{item.name}</p>
-          </div>
-        ))}
-      </div>
+      {/* Products Grid */}
+      <div className="px-4 pb-6">
+        <div className="grid grid-cols-2 gap-4">
+          {popularProducts.map((product) => (
+            <div
+              key={product.id}
+              onClick={() => handleProductClick(product.id)}
+              className="cursor-pointer"
+            >
+              {/* Heart Icon */}
+              <div className="relative mb-3">
+                <Heart
+                  className={`w-6 h-6 text-red-500 ${
+                    likedItems.has(product.id)
+                      ? "fill-red-500 text-red-500"
+                      : "text-gray-400"
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLike(product.id);
+                  }}
+                />
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="w-full h-40 object-cover rounded-2xl bg-gray-100"
+                />
 
-      {/* Кнопка назад */}
-      <div className="text-center mt-6">
-        <button
-          onClick={() => navigate("/welcome")}
-          className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
-        >
-          Назад
-        </button>
+             
+              </div>
+
+              {/* Price */}
+              <div className="mb-1">
+                <span className="text-lg font-bold text-gray-900">
+                  {product.price}
+                </span>
+              </div>
+
+              {/* Installment */}
+              <div className="mb-2">
+                <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded">
+                  {product.installment} в сплит
+                </span>
+              </div>
+
+              {/* Product Name */}
+              <h3 className="text-sm font-medium text-gray-900 mb-2 leading-tight">
+                {product.name}
+              </h3>
+
+              {/* Size and Days */}
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <Heart className="w-3 h-3 text-red-400" />
+                <span>{product.size}</span>
+                <span>•</span>
+                <span>{product.days}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Recommended Section */}
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            Рекомендуемое
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            {recommendedProducts.map((product) => (
+              <div
+                key={product.id}
+                onClick={() => handleProductClick(product.id)}
+                className="cursor-pointer"
+              >
+                {/* Heart Icon */}
+                <div className="relative mb-3">
+                <Heart
+                  className={`w-6 h-6 text-red-500 ${
+                    likedItems.has(product.id)
+                      ? "fill-red-500 text-red-500"
+                      : "text-gray-400"
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLike(product.id);
+                  }}
+                />
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="w-full h-40 object-cover rounded-2xl bg-gray-100"
+                  />
+
+                
+                </div>
+
+                {/* Price */}
+                <div className="mb-1">
+                  <span className="text-lg font-bold text-gray-900">
+                    {product.price}
+                  </span>
+                </div>
+
+                {/* Installment */}
+                <div className="mb-2">
+                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded">
+                    {product.installment} в сплит
+                  </span>
+                </div>
+
+                {/* Product Name */}
+                <h3 className="text-sm font-medium text-gray-900 mb-2 leading-tight">
+                  {product.name}
+                </h3>
+
+                {/* Size and Days */}
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <Heart className="w-3 h-3 text-red-400" />
+                  <span>{product.size}</span>
+                  <span>•</span>
+                  <span>{product.days}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

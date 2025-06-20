@@ -38,19 +38,19 @@ const WelcomePage: React.FC = () => {
     <div className="px-4 py-10 max-w-md mx-auto">
       {/* Приветствие */}
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-extrabold text-green-700">Привет, {user?.first_name || "Гость"}!</h2>
+        <h2 className="text-3xl font-extrabold text-[#42BA1A]">Привет, {user?.first_name || "Гость"}!</h2>
         <p className="mt-2 text-gray-500 text-sm">
-          Добро пожаловать в <strong className="text-green-700">FITSIZ</strong> — выбери, куда пойти!
+          Добро пожаловать в <strong className="text-[#42BA1A]">FITSIZ</strong> — выбери, куда пойти!
         </p>
       </div>
 
       {/* Секция кнопок */}
       <div className="grid grid-cols-1 gap-5">
-        {buttons.map(({ label, icon, path, color }) => (
+        {buttons.map(({ label, icon, path }) => (
           <div
             key={label}
             onClick={() => navigate(path)}
-            className={`flex items-center gap-4 p-4 rounded-2xl shadow-lg cursor-pointer bg-gradient-to-br ${color} transition-transform hover:scale-[1.02] active:scale-[0.98]`}
+            className={`flex items-center gap-4 p-4 rounded-2xl shadow-lg cursor-pointer bg-[#42BA1A] transition-transform hover:scale-[1.02] active:scale-[0.98]`}
           >
             <div className="bg-white rounded-full p-3 shadow-inner">
               {icon}

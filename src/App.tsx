@@ -7,7 +7,8 @@ import CatalogPage from "./pages/CatalogPage";
 import VideoPage from "./pages/VideoPage";
 import ProfilePage from "./pages/ProfilePage";
 import { UserProvider } from "../context/AuthContext";
-import { FaInfoCircle, FaPhone } from "react-icons/fa";
+import BottomNav from "./components/BottomNav";
+import MaskDetailsPage from "./pages/MaskDetailsPage";
 
 const App: React.FC = () => (
   <Router>
@@ -15,20 +16,20 @@ const App: React.FC = () => (
       {/* Wrapper на всю высоту экрана */}
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans">
         {/* Хедер */}
-        <header className="w-full mt-20 bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md ">
+        <header className="w-full mt-20 text-white shadow-md ">
           <div className="max-w-4xl mx-auto px-4 py-2 flex justify-between items-center">
             {/* Логотип + Название */}
             <div className="flex items-center gap-3">
-              <h1 className="text-sm font-extrabold ">
-                FITSIZ
-              </h1>
+             <img src="/image.png" className="w-30 h-14"/>
             </div>
           </div>
         </header>
 
         {/* Контент (растягивается по высоте) */}
-        <main className="flex-1 flex flex-col items-center justify-start p-6 max-w-md mx-auto w-full">
-          <Routes>
+        <main className="flex-1 flex flex-col items-center justify-start p-6 pb-24 max-w-md mx-auto w-full">
+        <Routes>
+        <Route path="/details/:id" element={<MaskDetailsPage />} />
+
             <Route path="/" element={<AuthPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
             <Route path="/mask" element={<MaskPage />} />
@@ -38,20 +39,8 @@ const App: React.FC = () => (
           </Routes>
         </main>
 
-        {/* Футер */}
-        <footer className="py-4 pb-6 bg-gray-100 text-gray-600 text-sm text-center w-full">
-          <div className="flex justify-center items-center gap-4">
-            <div className="flex items-center gap-1">
-              <FaInfoCircle />
-              <span>О нас</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <FaPhone />
-              <span>Поддержка</span>
-            </div>
-          </div>
-          <p className="mt-2">© 2025 MaskApp. Все права защищены.</p>
-        </footer>
+        <BottomNav />
+
       </div>
     </UserProvider>
   </Router>
