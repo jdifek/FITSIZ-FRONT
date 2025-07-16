@@ -1,47 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
-
-type masksType = {
-  id: number;
-  name: string;
-  imageUrl?: string;
-  price?: string;
-};
-
-const mockMasks: masksType[] = [
-  {
-    id: 1,
-    name: "Автоматическая маска ESAB Sentinel A60",
-    imageUrl:
-      "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg",
-    price: "₽7999",
-  },
-  {
-    id: 2,
-    name: "Фиксированная сварочная маска",
-    imageUrl:
-      "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg",
-    price: "₽4499",
-  },
-  {
-    id: 3,
-    name: "Пассивная маска с фильтром",
-    imageUrl:
-      "https://www.tuttosaldatura.it/3376-large_default/maschera-automatica-esab-sentinel-a60-0700600860.jpg",
-    price: "₽2999",
-  },
-];
+import api,  { type MasksType } from "../api/api";
 
 const MaskPage: React.FC = () => {
   const { user } = useUserContext();
-  const [masks, setMasks] = useState<masksType[]>([]);
+  const [masks, setMasks] = useState<MasksType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      // Вместо реального API ставим моковые данные
-      setMasks(mockMasks);
+    if (user?.telegramId) {
+      api
+        .getMasks()
+        .then((data: MasksType[]) => {
+          // Filter masks to show only the one associated with the user
+          const userMask = data.filter((mask) => mask.id === user.maskId);
+          setMasks(userMask);
+        })
+        .catch((error) => {
+          console.error("Ошибка загрузки масок:", error);
+        });
     }
   }, [user]);
 
@@ -55,6 +33,7 @@ const MaskPage: React.FC = () => {
             <div
               key={mask.id}
               className="bg-white border rounded-xl p-3 shadow-sm hover:shadow-md transition text-left"
+              onClick={() => navigate(`/details/${mask.id}`)}
             >
               {mask.imageUrl ? (
                 <img

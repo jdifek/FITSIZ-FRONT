@@ -9,6 +9,7 @@ import ProfilePage from "./pages/ProfilePage";
 import { UserProvider } from "../context/AuthContext";
 import BottomNav from "./components/BottomNav";
 import MaskDetailsPage from "./pages/MaskDetailsPage";
+import VideoDetail from "./pages/VideoDetail";
 
 const App: React.FC = () => (
   <Router>
@@ -35,6 +36,7 @@ const App: React.FC = () => (
             <Route path="/mask" element={<MaskPage />} />
             <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/video" element={<VideoPage />} />
+            <Route path="/video/:id" element={<VideoDetail />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </main>

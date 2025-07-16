@@ -14,7 +14,7 @@ const BottomNav: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white !bg-white border-t shadow-none flex justify-around py-2 pb-5 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 !bg-white border-t shadow-none flex justify-around py-2 pb-5 z-50">
       {navItems.map(({ path, icon }, i) => {
         const isActive = pathname === path;
         return (

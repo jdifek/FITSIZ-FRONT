@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api, { type masksType } from "../api/api";
+import api,{ type MasksType }  from "../api/api";
 import { useUserContext } from "../../context/AuthContext";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -8,7 +8,7 @@ const ProfilePage: React.FC = () => {
   const { user, setUser } = useUserContext();
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [masks, setMasks] = useState<masksType[]>([]);
+  const [masks, setMasks] = useState<MasksType[]>([]);
   const [selectedMaskId, setSelectedMaskId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const ProfilePage: React.FC = () => {
         .then(() => {
           api
             .getMasks()
-            .then((data) => {
+            .then((data: MasksType[]) => {
               setMasks(data);
               if (
                 selectedMaskId &&
@@ -49,10 +49,10 @@ const ProfilePage: React.FC = () => {
   }, [user?.telegramId]);
 
   const handleUpdate = () => {
-    if (user && user.telegramId && selectedMaskId) {
+    if (user && user.telegramId) {
       setLoading(true);
       api
-        .updateProfile(user.telegramId.toString(), phone, email, selectedMaskId)
+        .updateProfile(user.telegramId, phone, email, selectedMaskId)
         .then(() => api.getUser(user.telegramId.toString()))
         .then((updatedUser) => {
           setUser(updatedUser);
@@ -72,7 +72,6 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="flex justify-center px-4 py-10">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 space-y-6 border border-gray-200">
-        {/* Аватар */}
         <div className="flex flex-col items-center space-y-3">
           <div className="rounded-full bg-green-100 p-4 shadow-inner">
             <FaUserCircle className="text-green-600" size={64} />
@@ -82,8 +81,6 @@ const ProfilePage: React.FC = () => {
             {user?.first_name || "Пользователь"}, настройте данные ниже
           </p>
         </div>
-
-        {/* Поля */}
         <div className="space-y-4">
           <div>
             <label className="text-sm font-semibold text-gray-700">Телефон</label>
@@ -127,19 +124,17 @@ const ProfilePage: React.FC = () => {
             )}
           </div>
         </div>
-
-        {/* Кнопки */}
         <div className="flex justify-center gap-4 pt-4">
           <button
             onClick={handleUpdate}
-            disabled={!selectedMaskId || !user?.telegramId}
-            className=" text-white px-6 py-3 rounded-xl shadow-md hover:scale-105 transition disabled:opacity-50"
+            disabled={!user?.telegramId}
+            className="px-6 py-3 bg-green-600 text-white rounded-xl shadow-md hover:bg-green-700 transition disabled:opacity-50"
           >
             Обновить
           </button>
           <button
             onClick={() => navigate("/welcome")}
-            className=" text-white px-6 py-3 rounded-xl hover:bg-gray-300 transition"
+            className="px-6 py-3 bg-gray-200 text-white text-gray-800 rounded-xl hover:bg-gray-300 transition"
           >
             Назад
           </button>
