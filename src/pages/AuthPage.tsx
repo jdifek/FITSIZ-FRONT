@@ -61,15 +61,10 @@ const AuthPage: React.FC = () => {
   }, [setUser, navigate]);
 
   return (
-    <div className="text-center space-y-6">
-      <p className="text-gray-600">Пожалуйста, авторизуйтесь через Telegram</p>
-      <button
-        className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-md"
-        disabled
-      >
-        Войти
-      </button>
-    </div>
+    <div className="flex justify-center items-center py-10">
+    <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+  
   );
 };
 

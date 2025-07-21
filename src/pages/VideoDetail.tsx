@@ -30,20 +30,23 @@ const VideoDetail: React.FC = () => {
   }
   
   if (loading) {
-    return <div className="text-center text-gray-600 mt-20">Загрузка...</div>;
-  }
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );  }
 
   if (!video) {
     return <div className="text-center text-gray-600 mt-20">Видео не найдено</div>;
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen">
+    <div className="!min-w-full bg-white min-h-screen">
       <div className="flex items-center px-4 py-4 border-b border-gray-100">
         <ArrowLeft onClick={() => navigate("/video")} className="w-6 h-6 text-gray-600" />
         <p className="text-[22px] font-medium text-gray-900 ml-4">{video.title}</p>
       </div>
-      <div className="px-4 pb-6">
+      <div className="">
         {video.url ? (
        <iframe
        width="100%"

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api,{ type MasksType }  from "../api/api";
+import api, { type MasksType } from "../api/api";
 import { useUserContext } from "../../context/AuthContext";
-import { FaUserCircle } from "react-icons/fa";
 
 const ProfilePage: React.FC = () => {
   const { user, setUser } = useUserContext();
@@ -63,52 +62,96 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return <div className="text-center text-gray-600 mt-20">Загрузка...</div>;
-  }
-
   const currentMaskName = masks.find((m) => m.id === selectedMaskId)?.name;
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex justify-center px-4 py-10">
-      <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 space-y-6 border border-gray-200">
-        <div className="flex flex-col items-center space-y-3">
-          <div className="rounded-full bg-green-100 p-4 shadow-inner">
-            <FaUserCircle className="text-green-600" size={64} />
+    <div className="min-h-screen min-w-full">
+      {/* Header */}
+
+      {/* Content */}
+      {/* Profile Avatar and Info */}
+      <div className="flex flex-col items-center mb-8">
+        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center mb-4 shadow-lg">
+          {/* Avatar illustration */}
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              className="text-orange-800"
+            >
+              <circle cx="24" cy="18" r="8" fill="currentColor" opacity="0.8" />
+              <path
+                d="M12 36c0-6.627 5.373-12 12-12s12 5.373 12 12"
+                fill="currentColor"
+                opacity="0.8"
+              />
+            </svg>
           </div>
-          <h2 className="text-2xl font-bold text-green-700">Профиль</h2>
-          <p className="text-sm text-gray-500">
-            {user?.first_name || "Пользователь"}, настройте данные ниже
-          </p>
         </div>
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-semibold text-gray-700">Телефон</label>
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">
+          {user?.first_name || "User"}
+        </h2>
+        <p className="text-green-500 text-sm font-medium">
+         Обновите детали о вас
+        </p>
+      </div>
+
+      {/* Form Fields */}
+      <div className="space-y-6 ">
+        {/* Phone Number */}
+        <div>
+          <label className="block text-gray-900 font-medium mb-3 text-base">
+            Номер Телефона{" "}
+          </label>
+          <div className="bg-green-50 rounded-xl p-4">
             <input
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              className="w-full bg-transparent text-green-600 placeholder-green-400 text-base focus:outline-none"
               placeholder="+7..."
-              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
             />
           </div>
-          <div>
-            <label className="text-sm font-semibold text-gray-700">Email</label>
+        </div>
+
+        {/* Email Address */}
+        <div>
+          <label className="block text-gray-900 font-medium mb-3 text-base">
+            Email Aдрес
+          </label>
+          <div className="bg-green-50 rounded-xl p-4">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-transparent text-green-600 placeholder-green-400 text-base focus:outline-none"
               placeholder="example@mail.com"
-              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
             />
           </div>
-          <div>
-            <label className="text-sm font-semibold text-gray-700">Маска</label>
+        </div>
+
+        {/* Mask Name */}
+        <div>
+          <label className="block text-gray-900 font-medium mb-3 text-base">
+            Имя маски
+          </label>
+          <div className="bg-green-50 rounded-xl p-4">
             <select
               value={selectedMaskId || ""}
-              onChange={(e) => setSelectedMaskId(Number(e.target.value) || null)}
+              onChange={(e) =>
+                setSelectedMaskId(Number(e.target.value) || null)
+              }
               disabled={masks.length === 0}
-              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full bg-transparent text-green-600 text-base focus:outline-none appearance-none"
             >
               <option value="">Выберите маску</option>
               {masks.map((mask) => (
@@ -117,28 +160,30 @@ const ProfilePage: React.FC = () => {
                 </option>
               ))}
             </select>
-            {selectedMaskId && (
-              <p className="text-xs text-green-600 mt-1">
-                Текущая маска: <strong>{currentMaskName}</strong>
-              </p>
-            )}
           </div>
+          {selectedMaskId && currentMaskName && (
+            <p className="text-center text-green-500 text-sm mt-3 font-medium">
+              Current mask: {currentMaskName}
+            </p>
+          )}
         </div>
-        <div className="flex justify-center gap-4 pt-4">
-          <button
-            onClick={handleUpdate}
-            disabled={!user?.telegramId}
-            className="px-6 py-3 bg-green-600 text-white rounded-xl shadow-md hover:bg-green-700 transition disabled:opacity-50"
-          >
-            Обновить
-          </button>
-          <button
-            onClick={() => navigate("/welcome")}
-            className="px-6 py-3 bg-gray-200 text-white text-gray-800 rounded-xl hover:bg-gray-300 transition"
-          >
-            Назад
-          </button>
-        </div>
+      </div>
+
+      {/* Buttons */}
+      <div className="mt-12 space-y-4">
+        <button
+          onClick={handleUpdate}
+          disabled={!user?.telegramId || loading}
+          className="w-full !bg-green-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:bg-green-600 transition-colors disabled:opacity-50"
+        >
+          {loading ? "Загрузка..." : "Update"}
+        </button>
+        <button
+          onClick={() => navigate("/welcome")}
+          className="w-full !bg-gray-200 text-white  py-4 rounded-xl font-semibold text-lg hover:bg-gray-300 transition-colors"
+        >
+          Back
+        </button>
       </div>
     </div>
   );

@@ -42,11 +42,14 @@ const CatalogPage: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="text-center text-gray-600 mt-20">Загрузка...</div>;
-  }
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );  }
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen">
+    <div className="min-w-full mx-auto bg-white min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-4">
         <h1 className="!text-[24px] font-bold text-gray-900">Каталог</h1>

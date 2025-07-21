@@ -27,7 +27,7 @@ const App: React.FC = () => (
         </header>
 
         {/* Контент (растягивается по высоте) */}
-        <main className="flex-1 flex flex-col items-center justify-start p-6 pb-24 max-w-md mx-auto w-full">
+        <main className="flex-1 flex flex-col items-center justify-start p-6 px-[10px]  pb-24 max-w-md mx-auto w-full">
         <Routes>
         <Route path="/details/:id" element={<MaskDetailsPage />} />
 

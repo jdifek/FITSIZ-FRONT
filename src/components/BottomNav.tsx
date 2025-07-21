@@ -18,15 +18,16 @@ const BottomNav: React.FC = () => {
       {navItems.map(({ path, icon }, i) => {
         const isActive = pathname === path;
         return (
-          <button
+          <div
             key={i}
             onClick={() => navigate(path)}
-            className={`flex !bg-white flex-col items-center text-xs ${
+            className={`flex flex-col items-center py-3 text-xs !bg-white focus:outline-none outline-none ring-0 ${
               isActive ? "text-[#42BA1A]" : "text-black"
             }`}
+            
           >
             <div className="text-2xl">{icon}</div>
-          </button>
+          </div>
         );
       })}
     </nav>

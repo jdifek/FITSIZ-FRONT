@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
-import api,  { type MasksType } from "../api/api";
+import api, { type MasksType } from "../api/api";
 
 const MaskPage: React.FC = () => {
   const { user } = useUserContext();
   const [masks, setMasks] = useState<MasksType[]>([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     if (user?.telegramId) {
       api
         .getMasks()
@@ -16,12 +18,22 @@ const MaskPage: React.FC = () => {
           // Filter masks to show only the one associated with the user
           const userMask = data.filter((mask) => mask.id === user.maskId);
           setMasks(userMask);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Ошибка загрузки масок:", error);
+          setLoading(false);
         });
     }
   }, [user]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-md mx-auto px-4 py-6">

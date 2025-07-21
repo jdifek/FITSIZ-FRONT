@@ -21,30 +21,33 @@ const VideoPage: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center text-gray-600 mt-20">Загрузка...</div>;
-  }
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );  }
 
   return (
-    <div className="max-w-md mx-auto px-4 py-6">
+    <div className=" mx-auto !min-w-full py-6">
       <h2 className="text-2xl font-bold text-green-700 mb-4">Видео уроки</h2>
 
       {videos.length > 0 ? (
-        <div className="space-y-4">
+        <div className="">
           {videos.map((video) => (
             <div
               key={video.id}
-              className="flex items-start bg-white border border-gray-200 rounded-xl p-3 shadow-sm hover:shadow-md transition cursor-pointer"
+              className="flex items-start rounded-xl  p-3 hover:shadow-md transition cursor-pointer"
               onClick={() => navigate(`/video/${video.id}`)}
             >
               <img
                 src={video.thumbnailUrl || "https://via.placeholder.com/150"}
                 alt={video.title}
-                className="w-24 h-24 object-cover rounded-lg"
+                className="w-24 h-14 object-cover rounded-lg"
               />
               <div className="ml-4 flex-1">
-                {video.duration && (
+                {/* {video.duration && (
                   <p className="text-xs text-gray-400">{video.duration}</p>
-                )}
+                )} */}
                 <h3 className="text-sm font-semibold text-gray-800 leading-tight">
                   {video.title}
                 </h3>

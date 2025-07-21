@@ -43,8 +43,11 @@ const MaskDetails: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="text-center text-gray-600 mt-20">Загрузка...</div>;
-  }
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );  }
 
   if (!mask) {
     return <div className="text-center text-gray-600 mt-20">Маска не найдена</div>;
@@ -64,7 +67,7 @@ const MaskDetails: React.FC = () => {
   }));
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen">
+    <div className="min-w-full mx-auto bg-white min-h-screen">
       {/* Header */}
       <div className="flex items-center  py-4 border-b border-gray-100">
         <ArrowLeft onClick={() => navigate("/catalog")} className="w-6 h-6 text-gray-600" />
