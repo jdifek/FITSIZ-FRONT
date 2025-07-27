@@ -182,7 +182,7 @@ const ProfilePage: React.FC = () => {
           onClick={() => navigate("/welcome")}
           className="w-full !bg-gray-200 text-white  py-4 rounded-xl font-semibold text-lg hover:bg-gray-300 transition-colors"
         >
-          Back
+          Назад
         </button>
       </div>
     </div>

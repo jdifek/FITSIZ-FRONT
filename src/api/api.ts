@@ -27,6 +27,11 @@ import type { User } from "../../context/AuthContext";
     comment?: string;
     createdAt: Date;
   }[];
+  extraFields?: {
+    id: number;
+    key: string;
+    value: string;
+  }[];
 };
 
  type VideoType = {

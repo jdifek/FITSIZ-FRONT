@@ -163,6 +163,19 @@ const MaskDetails: React.FC = () => {
                 <span className="text-sm text-gray-900">{mask.days}</span>
               </div>
             )}
+            {mask.extraFields && mask.extraFields.length > 0 && (
+  <div className="mb-6">
+    <h3 className="text-base font-medium text-gray-900 mb-3">Дополнительные характеристики</h3>
+    <div className="space-y-2">
+      {mask.extraFields.map((field) => (
+        <div key={field.id} className="flex justify-between">
+          <span className="text-sm text-gray-600">{field.key}</span>
+          <span className="text-sm text-gray-900">{field.value}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
           </div>
         </div>
 
