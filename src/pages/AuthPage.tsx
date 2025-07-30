@@ -45,19 +45,8 @@ const AuthPage: React.FC = () => {
         userAgent: navigator.userAgent,
       });
 
-      // Используем заглушку для тестов вне Telegram
-    //   const mockUser = { id: "569166369", first_name: "Денис" };
-    //   console.log("Using mock user for non-Telegram environment:", mockUser);
-    //   api
-    //     .registerUser(mockUser.id, mockUser.first_name)
-    //     .then((registeredUser) => {
-    //       setUser(registeredUser);
-    //       navigate("/welcome");
-    //     })
-    //     .catch((error) => {
-    //       console.error("Login error with mock data:", error.message);
-    //     });
-    // }
+     
+    }
   }, [setUser, navigate]);
 
   return (
