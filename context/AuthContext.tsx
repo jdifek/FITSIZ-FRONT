@@ -23,14 +23,14 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const mockUser = { first_name: 'Тестовый', id: 12345 };
-    const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user || mockUser;
-    if (telegramUser) {
-      api.registerUser(telegramUser.id.toString(), telegramUser.first_name).then((registeredUser) => {
-        setUser(registeredUser);
-      });
-    }
+    const telegramUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+    if (!telegramUser) return;
+  
+    api.registerUser(telegramUser.id.toString(), telegramUser.first_name).then((registeredUser) => {
+      setUser(registeredUser);
+    });
   }, []);
+  
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
