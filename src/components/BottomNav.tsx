@@ -1,15 +1,16 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaUser, FaVideo, FaMask, FaList } from "react-icons/fa";
+import { FaUser, FaVideo, FaList } from "react-icons/fa";
+import { Home } from "lucide-react";
 
 const BottomNav: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const navItems = [
-    { path: "/mask", icon: <FaMask />, label: "Маска" },
+    { path: "/welcome", icon: <Home />, label: "Домашняя" },
     { path: "/catalog", icon: <FaList />, label: "Каталог" },
-    { path: "/video", icon: <FaVideo />, label: "Видео" },
+    { path: "/video", icon: <FaVideo />, label: "Все обзоры" },
     { path: "/profile", icon: <FaUser />, label: "Профиль" },
   ];
 

@@ -8,6 +8,7 @@ const ProfilePage: React.FC = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [masks, setMasks] = useState<MasksType[]>([]);
+  const [userMasks, setUserMasks] = useState<MasksType[]>([]);
   const [selectedMaskId, setSelectedMaskId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -30,6 +31,9 @@ const ProfilePage: React.FC = () => {
             .getMasks()
             .then((data: MasksType[]) => {
               setMasks(data);
+              const userMask = data.filter((mask) => mask.id === user.maskId);
+              setUserMasks(userMask);
+
               if (
                 selectedMaskId &&
                 !data.some((mask) => mask.id === selectedMaskId)
@@ -61,6 +65,7 @@ const ProfilePage: React.FC = () => {
         .finally(() => setLoading(false));
     }
   };
+ 
 
   const currentMaskName = masks.find((m) => m.id === selectedMaskId)?.name;
 
@@ -79,6 +84,7 @@ const ProfilePage: React.FC = () => {
       {/* Content */}
       {/* Profile Avatar and Info */}
       <div className="flex flex-col items-center mb-8">
+        <h3 className="text-3xl font-bold text-gray-900 mb-6">Личный кабинет сварщика</h3>
         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center mb-4 shadow-lg">
           {/* Avatar illustration */}
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
@@ -142,7 +148,7 @@ const ProfilePage: React.FC = () => {
         {/* Mask Name */}
         <div>
           <label className="block text-gray-900 font-medium mb-3 text-base">
-            Имя маски
+            Моя маска
           </label>
           <div className="bg-green-50 rounded-xl p-4">
             <select
@@ -167,6 +173,37 @@ const ProfilePage: React.FC = () => {
             </p>
           )}
         </div>
+        <h2 className="text-2xl font-bold text-green-700 mb-6">Мои маски</h2>
+
+        {userMasks.length > 0 ? (
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          {userMasks.map((mask) => (
+            <div
+              key={mask.id}
+              className="bg-white border rounded-xl p-3 shadow-sm hover:shadow-md transition text-left"
+              onClick={() => navigate(`/details/${mask.id}`)}
+            >
+              {mask.imageUrl ? (
+                <img
+                  src={mask.imageUrl}
+                  alt={mask.name}
+                  className="w-full h-28 object-cover rounded-lg mb-2"
+                />
+              ) : (
+                <div className="w-full h-28 bg-gray-200 rounded-lg mb-2 flex items-center justify-center text-gray-400">
+                  Нет изображения
+                </div>
+              )}
+              <h4 className="text-sm font-medium text-gray-800">{mask.name}</h4>
+              {mask.price && (
+                <p className="text-sm text-gray-500">{mask.price}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-600">Здесь пока нет масок</p>
+      )}
       </div>
 
       {/* Buttons */}
