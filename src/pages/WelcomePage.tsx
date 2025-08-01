@@ -1,19 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
-import { FaUser, FaVideo, FaMask, FaList } from "react-icons/fa";
+import { FaUser, FaVideo, FaList } from "react-icons/fa";
 
 const WelcomePage: React.FC = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
   const buttons = [
-    {
-      label: "Моя маска",
-      icon: <FaMask className="text-2xl text-black" />,
-      path: "/mask",
-      color: "from-green-400 to Universo-600",
-    },
+  
     {
       label: "Каталог",
       icon: <FaList className="text-2xl text-black" />,
