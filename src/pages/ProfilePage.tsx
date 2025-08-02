@@ -173,6 +173,19 @@ const ProfilePage: React.FC = () => {
             </p>
           )}
         </div>
+        <div className="mt-6 space-y-4">
+  <a href="/video/настройка" className="block w-full text-center py-2 bg-blue-500 text-white rounded-lg">Как настроить маску</a>
+  <button
+    className="w-full py-2 bg-gray-800 text-white rounded-lg"
+    onClick={() => {
+      if (confirm("Вы переходите на официального чат-бота FITSIZ, который поможет Вам сделать первые шаги в сварке")) {
+        window.location.href = "https://t.me/fitsiz_assistant_bot";
+      }
+    }}
+  >
+    Как начать варить?
+  </button>
+</div>
         <h2 className="text-2xl font-bold text-green-700 mb-6">Мои маски</h2>
 
         {userMasks.length > 0 ? (

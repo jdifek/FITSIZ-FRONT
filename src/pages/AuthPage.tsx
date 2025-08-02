@@ -16,8 +16,11 @@ const AuthPage: React.FC = () => {
         .registerUser(user.id.toString(), user.first_name || user.username || "User")
         .then((registeredUser) => {
           setUser(registeredUser);
-          navigate("/welcome");
-        })
+          if (registeredUser.quiz) {
+            navigate("/welcome");
+          } else {
+            navigate("/quiz");
+          }        })
         .catch((error) => {
           console.error("Login error:", error.message);
         });

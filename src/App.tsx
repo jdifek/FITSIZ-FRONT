@@ -10,6 +10,7 @@ import { UserProvider } from "../context/AuthContext";
 import BottomNav from "./components/BottomNav";
 import MaskDetailsPage from "./pages/MaskDetailsPage";
 import VideoDetail from "./pages/VideoDetail";
+import QuizPage from "./pages/QuizPage";
 
 const App: React.FC = () => (
   <Router>
@@ -30,6 +31,7 @@ const App: React.FC = () => (
         <main className="flex-1 flex flex-col items-center justify-start p-6 px-[10px]  pb-24 max-w-md mx-auto w-full">
         <Routes>
         <Route path="/details/:id" element={<MaskDetailsPage />} />
+        <Route path="/quiz" element={<QuizPage />} />
 
             <Route path="/" element={<AuthPage />} />
             <Route path="/welcome" element={<WelcomePage />} />

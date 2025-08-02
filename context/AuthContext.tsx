@@ -9,6 +9,7 @@ export interface User {
   first_name?: string;
   phone?: string;
   email?: string;
+  quiz?: boolean;
   maskId?: number | null;
   username?: string;
   photoUrl?: string;

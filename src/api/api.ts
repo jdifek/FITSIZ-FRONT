@@ -2,7 +2,7 @@ import axios from "axios";
 import type { User } from "../../context/AuthContext";
 
 // Типы
- type MasksType = {
+type MasksType = {
   id: number;
   name: string;
   instructions?: string;
@@ -34,7 +34,7 @@ import type { User } from "../../context/AuthContext";
   }[];
 };
 
- type VideoType = {
+type VideoType = {
   id: number;
   title: string;
   url?: string;
@@ -44,7 +44,8 @@ import type { User } from "../../context/AuthContext";
 };
 
 // API config
-export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3333/api";
+export const API_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3333/api";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -67,11 +68,9 @@ export default {
   getUser: (telegramId: string): Promise<User> =>
     api.get(`/user/${telegramId}`),
 
-  getMasks: (): Promise<MasksType[]> =>
-    api.get("/masks"),
+  getMasks: (): Promise<MasksType[]> => api.get("/masks"),
 
-  getMaskDetails: (id: number): Promise<MasksType> =>
-    api.get(`/masks/${id}`),
+  getMaskDetails: (id: number): Promise<MasksType> => api.get(`/masks/${id}`),
 
   getMaskInstructions: (id: number): Promise<string> =>
     api.get(`/masks/${id}/instructions`),
@@ -79,16 +78,16 @@ export default {
   getCatalog: (name: string): Promise<MasksType[]> =>
     api.get("/catalog", { params: { name } }),
 
-  getVideos: (): Promise<VideoType[]> =>
-    api.get("/videos"),
+  getVideos: (): Promise<VideoType[]> => api.get("/videos"),
 
   updateProfile: (
     telegramId: string,
-    phone: string,
-    email: string,
-    maskId: number | null
+    phone?: string,
+    email?: string,
+    maskId?: number | null,
+    quiz?: boolean
   ): Promise<User> =>
-    api.post("/profile", { telegramId, phone, email, maskId }),
+    api.post("/profile", { telegramId, phone, email, maskId, quiz }),
 };
 
 // Экспорт типов
