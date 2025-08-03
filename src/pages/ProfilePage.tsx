@@ -174,7 +174,7 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
         <div className="mt-6 space-y-4">
-  <a href="/video/настройка" className="block w-full text-center py-2 bg-blue-500 text-white rounded-lg">Как настроить маску</a>
+  <a href="/video" className="block w-full text-center py-2 bg-blue-500 text-white rounded-lg">Как настроить маску</a>
   <button
     className="w-full py-2 bg-gray-800 text-white rounded-lg"
     onClick={() => {
