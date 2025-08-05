@@ -62,6 +62,23 @@ api.interceptors.response.use(
 
 // Типизированный API
 export default {
+  getUserMasks: async (telegramId: string): Promise<MasksType[]> => {
+    const response = await api.get(`/user/${telegramId}/masks`);
+    console.log("Raw API response:", response); // Для отладки
+    
+    // Если response.data содержит массив
+    if (response && response.data) {
+      return response.data;
+    }
+    
+    // Если response сам является массивом
+    if (Array.isArray(response)) {
+      return response;
+    }
+    
+    // Если ничего не найдено
+    return [];
+  },
   registerUser: (telegramId: string, firstName: string): Promise<User> =>
     api.post("/register", { telegramId, firstName }),
 
@@ -77,6 +94,8 @@ export default {
 
   getCatalog: (name: string): Promise<MasksType[]> =>
     api.get("/catalog", { params: { name } }),
+  addUserMask: (telegramId: string, maskId: number): Promise<void> =>
+    api.post(`/user/${telegramId}/add-mask`, { maskId }),
 
   getVideos: (): Promise<VideoType[]> => api.get("/videos"),
 

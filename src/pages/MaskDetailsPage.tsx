@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { useUserContext } from "../../context/AuthContext";
 import api, { type MasksType } from "../api/api";
 
 const MaskDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { user, setUser } = useUserContext();
   const [mask, setMask] = useState<MasksType | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -26,28 +24,7 @@ const MaskDetails: React.FC = () => {
     }
   }, [id]);
 
-  const handleAddToMyMasks = () => {
-    if (user?.telegramId && mask?.id) {
-      setLoading(true);
-      api
-        .updateProfile(
-          user.telegramId,
-          user.phone || "",
-          user.email || "",
-          mask.id,
-          undefined,
-          true
-        )
-        .then((updatedUser) => {
-          setUser(updatedUser);
-          navigate("/mask");
-        })
-        .catch((error) => {
-          console.error("Ошибка добавления маски:", error);
-        })
-        .finally(() => setLoading(false));
-    }
-  };
+
 
   if (loading) {
     return (
@@ -106,13 +83,7 @@ const MaskDetails: React.FC = () => {
         {/* Mask Name and Add Button */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-gray-900">{mask.name}</h2>
-          <button
-            onClick={handleAddToMyMasks}
-            disabled={!user?.telegramId}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50"
-          >
-            +
-          </button>
+      
         </div>
 
         {/* Description */}

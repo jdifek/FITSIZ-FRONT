@@ -16,46 +16,53 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     if (user?.telegramId) {
       setLoading(true);
-      api
-        .getUser(user.telegramId.toString())
+  
+      // 1) Загрузка данных пользователя
+      api.getUser(user.telegramId.toString())
         .then((fetchedUser) => {
+          console.log("Fetched user:", fetchedUser); // ДОБАВИТЬ
           setPhone(fetchedUser.phone || "");
           setEmail(fetchedUser.email || "");
           setSelectedMaskId(fetchedUser.maskId || null);
         })
         .catch((error) => {
           console.error("Ошибка получения пользователя:", error);
-        })
-        .then(() => {
-          api
-            .getMasks()
-            .then((data: MasksType[]) => {
-              setMasks(data);
-              const userMask = data.filter((mask) => mask.id === user.maskId);
-              setUserMasks(userMask);
-
-              if (
-                selectedMaskId &&
-                !data.some((mask) => mask.id === selectedMaskId)
-              ) {
-                setSelectedMaskId(null);
-              }
-            })
-            .catch((error) => {
-              console.error("Ошибка загрузки масок:", error);
-            })
-            .finally(() => setLoading(false));
         });
+  
+      // 2) Загрузка всех доступных масок
+      api.getMasks()
+        .then((allMasks) => {
+          console.log("All masks:", allMasks); // ДОБАВИТЬ
+          setMasks(Array.isArray(allMasks) ? allMasks : []);
+        })
+        .catch((error) => {
+          console.error("Ошибка загрузки масок:", error);
+          setMasks([]);
+        });
+  
+      // 3) Загрузка масок пользователя
+      api.getUserMasks(user.telegramId.toString())
+        .then((userMaskList) => {
+          console.log("User masks from API:", userMaskList); // ДОБАВИТЬ
+          console.log("Is array?", Array.isArray(userMaskList)); // ДОБАВИТЬ
+          console.log("Length:", userMaskList?.length); // ДОБАВИТЬ
+          setUserMasks(Array.isArray(userMaskList) ? userMaskList : []);
+        })
+        .catch((error) => {
+          console.error("Ошибка загрузки пользовательских масок:", error);
+          setUserMasks([]);
+        })
+        .finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
   }, [user?.telegramId]);
-
+  
+  
   const handleUpdate = () => {
     if (user && user.telegramId) {
       setLoading(true);
-      api
-        .updateProfile(user.telegramId, phone, email, selectedMaskId)
+      api.updateProfile(user.telegramId, phone, email, selectedMaskId)
         .then(() => api.getUser(user.telegramId.toString()))
         .then((updatedUser) => {
           setUser(updatedUser);
@@ -65,8 +72,8 @@ const ProfilePage: React.FC = () => {
         .finally(() => setLoading(false));
     }
   };
- 
 
+  // Имя текущей маски для показа
   const currentMaskName = masks.find((m) => m.id === selectedMaskId)?.name;
 
   if (loading) {
@@ -80,13 +87,11 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen min-w-full">
       {/* Header */}
-
-      {/* Content */}
-      {/* Profile Avatar and Info */}
       <div className="flex flex-col items-center mb-8">
-        <h3 className="text-3xl font-bold text-gray-900 mb-6">Личный кабинет сварщика</h3>
+        <h3 className="text-3xl font-bold text-gray-900 mb-6">
+          Личный кабинет сварщика
+        </h3>
         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center mb-4 shadow-lg">
-          {/* Avatar illustration */}
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
             <svg
               width="48"
@@ -107,13 +112,13 @@ const ProfilePage: React.FC = () => {
           {user?.first_name || "User"}
         </h2>
         <p className="text-green-500 text-sm font-medium">
-         Обновите детали о вас
+          Обновите детали о вас
         </p>
       </div>
 
-      {/* Form Fields */}
+      {/* Поля формы */}
       <div className="space-y-6 ">
-        {/* Phone Number */}
+        {/* Телефон */}
         <div>
           <label className="block text-gray-900 font-medium mb-3 text-base">
             Номер Телефона{" "}
@@ -129,7 +134,7 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Email Address */}
+        {/* Email */}
         <div>
           <label className="block text-gray-900 font-medium mb-3 text-base">
             Email Aдрес
@@ -145,27 +150,46 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Mask Name */}
+        {/* Выбор маски */}
         <div>
           <label className="block text-gray-900 font-medium mb-3 text-base">
             Моя маска
           </label>
-          <div className="bg-green-50 rounded-xl p-4">
-            <select
-              value={selectedMaskId || ""}
-              onChange={(e) =>
-                setSelectedMaskId(Number(e.target.value) || null)
-              }
-              disabled={masks.length === 0}
-              className="w-full bg-transparent text-green-600 text-base focus:outline-none appearance-none"
+          <div className="flex gap-1">
+            <div className="flex items-center justify-between bg-green-50 rounded-xl p-4">
+              <select
+                value={selectedMaskId ?? ""}
+                onChange={(e) =>
+                  setSelectedMaskId(e.target.value ? Number(e.target.value) : null)
+                }
+                disabled={!Array.isArray(masks) || masks.length === 0}
+                className="w-full bg-transparent text-green-600 text-base focus:outline-none appearance-none"
+              >
+                <option value="">Выберите маску</option>
+                {Array.isArray(masks) &&
+                  masks.map((mask) => (
+                    <option key={mask.id} value={mask.id}>
+                      {mask.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <button
+              className="ml-4 px-1 py-1 bg-black text-white text-sm rounded-lg"
+              onClick={async () => {
+                if (!selectedMaskId || !user?.telegramId) return;
+
+                try {
+                  await api.addUserMask(user.telegramId, selectedMaskId);
+                  const updatedUserMasks = await api.getUserMasks(user.telegramId);
+                  setUserMasks(Array.isArray(updatedUserMasks) ? updatedUserMasks : []);
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
             >
-              <option value="">Выберите маску</option>
-              {masks.map((mask) => (
-                <option key={mask.id} value={mask.id}>
-                  {mask.name}
-                </option>
-              ))}
-            </select>
+              Добавить еще
+            </button>
           </div>
           {selectedMaskId && currentMaskName && (
             <p className="text-center text-green-500 text-sm mt-3 font-medium">
@@ -173,53 +197,64 @@ const ProfilePage: React.FC = () => {
             </p>
           )}
         </div>
+
+        {/* Ссылки и кнопки */}
         <div className="mt-6 space-y-4">
-  <a href="/video" className="block w-full text-center py-2 bg-blue-500 text-white rounded-lg">Как настроить маску</a>
-  <button
-    className="w-full py-2 bg-gray-800 text-white rounded-lg"
-    onClick={() => {
-      if (confirm("Вы переходите на официального чат-бота FITSIZ, который поможет Вам сделать первые шаги в сварке")) {
-        window.location.href = "https://t.me/fitsiz_assistant_bot";
-      }
-    }}
-  >
-    Как начать варить?
-  </button>
-</div>
+          <a
+            href="/video"
+            className="block w-full text-center py-2 bg-blue-500 text-white rounded-lg"
+          >
+            Как настроить маску
+          </a>
+          <button
+            className="w-full py-2 bg-gray-800 text-white rounded-lg"
+            onClick={() => {
+              if (
+                confirm(
+                  "Вы переходите на официального чат-бота FITSIZ, который поможет Вам сделать первые шаги в сварке"
+                )
+              ) {
+                window.location.href = "https://t.me/fitsiz_assistant_bot";
+              }
+            }}
+          >
+            Как начать варить?
+          </button>
+        </div>
+
+        {/* Секция "Мои маски" */}
         <h2 className="text-2xl font-bold text-green-700 mb-6">Мои маски</h2>
 
-        {userMasks.length > 0 ? (
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          {userMasks.map((mask) => (
-            <div
-              key={mask.id}
-              className="bg-white border rounded-xl p-3 shadow-sm hover:shadow-md transition text-left"
-              onClick={() => navigate(`/details/${mask.id}`)}
-            >
-              {mask.imageUrl ? (
-                <img
-                  src={mask.imageUrl}
-                  alt={mask.name}
-                  className="w-full h-28 object-cover rounded-lg mb-2"
-                />
-              ) : (
-                <div className="w-full h-28 bg-gray-200 rounded-lg mb-2 flex items-center justify-center text-gray-400">
-                  Нет изображения
-                </div>
-              )}
-              <h4 className="text-sm font-medium text-gray-800">{mask.name}</h4>
-              {mask.price && (
-                <p className="text-sm text-gray-500">{mask.price}</p>
-              )}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-center text-gray-600">Здесь пока нет масок</p>
-      )}
+        {Array.isArray(userMasks) && userMasks.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4 mb-8">
+            {userMasks.map((mask) => (
+              <div
+                key={mask.id}
+                className="bg-white border rounded-xl p-3 shadow-sm hover:shadow-md transition text-left cursor-pointer"
+                onClick={() => navigate(`/details/${mask.id}`)}
+              >
+                {mask.imageUrl ? (
+                  <img
+                    src={mask.imageUrl}
+                    alt={mask.name}
+                    className="w-full h-28 object-cover rounded-lg mb-2"
+                  />
+                ) : (
+                  <div className="w-full h-28 bg-gray-200 rounded-lg mb-2 flex items-center justify-center text-gray-400">
+                    Нет изображения
+                  </div>
+                )}
+                <h4 className="text-sm font-medium text-gray-800">{mask.name}</h4>
+                {mask.price && <p className="text-sm text-gray-500">{mask.price}</p>}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-600">Здесь пока нет масок</p>
+        )}
       </div>
 
-      {/* Buttons */}
+      {/* Кнопки */}
       <div className="mt-12 space-y-4">
         <button
           onClick={handleUpdate}
