@@ -17,7 +17,6 @@ const QuizPage: React.FC = () => {
         user.email ?? undefined,
         user.maskId ?? null,
         true,
-        true
       );
       setUser({ ...user, quiz: true });
 

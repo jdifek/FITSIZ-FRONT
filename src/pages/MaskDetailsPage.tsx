@@ -35,7 +35,8 @@ const MaskDetails: React.FC = () => {
           user.phone || "",
           user.email || "",
           mask.id,
-          
+          undefined,
+          true
         )
         .then((updatedUser) => {
           setUser(updatedUser);
