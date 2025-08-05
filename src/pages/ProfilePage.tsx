@@ -226,11 +226,11 @@ const ProfilePage: React.FC = () => {
           disabled={!user?.telegramId || loading}
           className="w-full !bg-green-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:bg-green-600 transition-colors disabled:opacity-50"
         >
-          {loading ? "Загрузка..." : "Update"}
+          {loading ? "Загрузка..." : "Обновить"}
         </button>
         <button
           onClick={() => navigate("/welcome")}
-          className="w-full !bg-gray-200 text-white  py-4 rounded-xl font-semibold text-lg hover:bg-gray-300 transition-colors"
+          className="w-full !bg-blue-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-600 transition-colors"
         >
           Назад
         </button>

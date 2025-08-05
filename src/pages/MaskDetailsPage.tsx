@@ -34,7 +34,8 @@ const MaskDetails: React.FC = () => {
           user.telegramId,
           user.phone || "",
           user.email || "",
-          mask.id
+          mask.id,
+          
         )
         .then((updatedUser) => {
           setUser(updatedUser);

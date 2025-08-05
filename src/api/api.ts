@@ -85,9 +85,10 @@ export default {
     phone?: string,
     email?: string,
     maskId?: number | null,
-    quiz?: boolean
+    quiz?: boolean,
+    add?: boolean
   ): Promise<User> =>
-    api.post("/profile", { telegramId, phone, email, maskId, quiz }),
+    api.post("/profile", { telegramId, phone, email, maskId, quiz, add }),
 };
 
 // Экспорт типов

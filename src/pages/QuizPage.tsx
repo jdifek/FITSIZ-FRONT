@@ -16,6 +16,7 @@ const QuizPage: React.FC = () => {
         user.phone ?? undefined,
         user.email ?? undefined,
         user.maskId ?? null,
+        true,
         true
       );
       setUser({ ...user, quiz: true });
@@ -23,9 +24,11 @@ const QuizPage: React.FC = () => {
       if (hasMask) {
         navigate("/profile");
       } else {
-        const wantsHelp = confirm("Помочь подобрать маску?");
+        const wantsHelp = confirm(
+          "Вы переходите на официальный чат-бот FITSIZ, который поможет Вам выбрать нужную маску"
+        );
         if (wantsHelp) {
-          window.location.href = "https://t.me/fitsiz_assistant_bot";
+          window.location.href = "https://t.me/fitsizpicker_bot";
         } else {
           navigate("/welcome");
         }
