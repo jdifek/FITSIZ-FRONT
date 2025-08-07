@@ -15,7 +15,6 @@ const QuizPage: React.FC = () => {
         user.telegramId,
         user.phone ?? undefined,
         user.email ?? undefined,
-        user.maskId ?? null,
         true,
       );
       setUser({ ...user, quiz: true });

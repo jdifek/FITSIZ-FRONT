@@ -103,11 +103,10 @@ export default {
     telegramId: string,
     phone?: string,
     email?: string,
-    maskId?: number | null,
     quiz?: boolean,
     add?: boolean
   ): Promise<User> =>
-    api.post("/profile", { telegramId, phone, email, maskId, quiz, add }),
+    api.post("/profile", { telegramId, phone, email, quiz, add }),
 };
 
 // Экспорт типов
