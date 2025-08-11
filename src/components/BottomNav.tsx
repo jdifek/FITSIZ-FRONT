@@ -15,15 +15,15 @@ const BottomNav: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 !bg-white border-t shadow-none flex justify-around py-2 pb-5 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 !bg-black border-t shadow-none flex justify-around py-2 pb-5 z-50">
       {navItems.map(({ path, icon }, i) => {
         const isActive = pathname === path;
         return (
           <div
             key={i}
             onClick={() => navigate(path)}
-            className={`flex flex-col items-center py-3 text-xs !bg-white focus:outline-none outline-none ring-0 ${
-              isActive ? "text-[#42BA1A]" : "text-black"
+            className={`flex flex-col items-center py-3 text-xs !bg-black focus:outline-none outline-none ring-0 ${
+              isActive ? "text-[#42BA1A]" : "text-white"
             }`}
             
           >

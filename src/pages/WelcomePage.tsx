@@ -8,7 +8,6 @@ const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
 
   const buttons = [
-  
     {
       label: "Каталог",
       icon: <FaList className="text-2xl text-black" />,
@@ -36,7 +35,9 @@ const WelcomePage: React.FC = () => {
           Привет, {user?.first_name || "Гость"}!
         </h2>
         <p className="mt-2 text-gray-500 text-sm">
-          Добро пожаловать в <strong className="text-[#42BA1A]">FITSIZ</strong> — выбери, куда пойти!
+          Добро пожаловать в
+          <strong className="text-[#42BA1A]"> FITSIZ APP</strong> Официальная
+          платформа для владельцев масок FITSIZ
         </p>
       </div>
       <div className="grid grid-cols-1 gap-5">
