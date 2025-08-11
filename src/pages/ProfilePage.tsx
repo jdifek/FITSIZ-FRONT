@@ -62,7 +62,7 @@ const ProfilePage: React.FC = () => {
   const handleUpdate = () => {
     if (user && user.telegramId) {
       setLoading(true);
-      api.updateProfile(user.telegramId, phone, email, selectedMaskId)
+      api.updateProfile(user.telegramId, phone, email)
         .then(() => api.getUser(user.telegramId.toString()))
         .then((updatedUser) => {
           setUser(updatedUser);
