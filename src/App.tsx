@@ -17,7 +17,7 @@ const AppContent: React.FC = () => {
 
   // Определим фон в зависимости от текущего пути
   const isWelcomePage = location.pathname === "/welcome";
-  const backgroundClass = isWelcomePage ? "bg-black text-white" : "bg-black text-white";
+  const backgroundClass = isWelcomePage ? "bg-black text-white" : "bg-white text-gray-900";
 
   return (
     <div className={`min-h-screen flex flex-col font-sans ${backgroundClass}`}>
