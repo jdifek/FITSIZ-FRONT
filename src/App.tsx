@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import WelcomePage from "./pages/WelcomePage";
 import MaskPage from "./pages/MaskPage";
@@ -12,71 +12,9 @@ import MaskDetailsPage from "./pages/MaskDetailsPage";
 import VideoDetail from "./pages/VideoDetail";
 import QuizPage from "./pages/QuizPage";
 
-// Компонент для предзагрузки изображений
-const useImagePreloader = (imageUrls: string[]) => {
-  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  useEffect(() => {
-    let loadedCount = 0;
-    const totalImages = imageUrls.length;
-
-    if (totalImages === 0) {
-      setImagesLoaded(true);
-      return;
-    }
-
-    const imagePromises = imageUrls.map((url) => {
-      return new Promise<void>((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-          loadedCount++;
-          if (loadedCount === totalImages) {
-            setImagesLoaded(true);
-          }
-          resolve();
-        };
-        img.onerror = () => {
-          loadedCount++;
-          if (loadedCount === totalImages) {
-            setImagesLoaded(true);
-          }
-          resolve();
-        };
-        img.src = url;
-      });
-    });
-
-    Promise.all(imagePromises).then(() => {
-      // Минимальная задержка для плавности
-      setTimeout(() => setImagesLoaded(true), 100);
-    });
-  }, [imageUrls]);
-
-  return imagesLoaded;
-};
-
-// Компонент загрузки
-const LoadingScreen: React.FC = () => (
-  <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-    <div className="flex flex-col items-center">
-      <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mb-4"></div>
-      <p className="text-white text-lg">Загрузка...</p>
-    </div>
-  </div>
-);
 
 const AppContent: React.FC = () => {
-  const location = useLocation();
-  
-  // Предзагружаем основные изображения
-  const imagesLoaded = useImagePreloader(["/2.1.png", "/image.png"]);
-
-  // Определим фон в зависимости от текущего пути
-
-  // Показываем загрузку пока изображения не загружены
-  if (!imagesLoaded) {
-    return <LoadingScreen />;
-  }
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 bg-black text-white`}>
