@@ -24,7 +24,7 @@ const AppContent: React.FC = () => {
           <Link to={'/welcome'} className="flex items-center gap-3">
             <img 
               src={'/2.1.png'} 
-              className="w-30 h-14 transition-opacity duration-300" 
+              className="w-30  transition-opacity duration-300" 
               alt="Logo"
             />
           </Link>
