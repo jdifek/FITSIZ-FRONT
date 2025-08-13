@@ -49,10 +49,10 @@ const CatalogPage: React.FC = () => {
     );  }
 
   return (
-    <div className="min-w-full mx-auto bg-white min-h-screen">
+    <div className="min-w-full mx-auto bg-black min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-4">
-        <h1 className="!text-[24px] font-bold text-gray-900">Каталог</h1>
+        <h1 className="!text-[24px] font-bold text-white">Каталог</h1>
         {/* <div className="flex items-center gap-2">
           <div className="w-9 h-9 bg-[#42BA1A] rounded-2xl flex items-center justify-center">
             <Search className="w-4 h-4 text-white" />
@@ -92,7 +92,7 @@ const CatalogPage: React.FC = () => {
                 />
               </div>
               <div className="mb-1">
-                <span className="text-lg font-bold text-gray-900">
+                <span className="text-lg font-bold text-white">
                   {product.price || "Цена не указана"}
                 </span>
               </div>
@@ -103,7 +103,7 @@ const CatalogPage: React.FC = () => {
                   </span>
                 </div>
               )}
-              <h3 className="text-sm font-medium text-gray-900 mb-2 leading-tight">
+              <h3 className="text-sm font-medium text-white mb-2 leading-tight">
                 {product.name}
               </h3>
               <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -119,7 +119,7 @@ const CatalogPage: React.FC = () => {
         {/* Recommended Section */}
         {recommendedProducts.length > 0 && (
           <div className="mt-8">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Рекомендуемое</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">Рекомендуемое</h2>
             <div className="grid grid-cols-2 gap-4">
               {recommendedProducts.map((product) => (
                 <div
@@ -146,7 +146,7 @@ const CatalogPage: React.FC = () => {
                     />
                   </div>
                   <div className="mb-1">
-                    <span className="text-lg font-bold text-gray-900">
+                    <span className="text-lg font-bold text-white">
                       {product.price || "Цена не указана"}
                     </span>
                   </div>
@@ -157,7 +157,7 @@ const CatalogPage: React.FC = () => {
                       </span>
                     </div>
                   )}
-                  <h3 className="text-sm font-medium text-gray-900 mb-2 leading-tight">
+                  <h3 className="text-sm font-medium text-white mb-2 leading-tight">
                     {product.name}
                   </h3>
                   <div className="flex items-center gap-2 text-xs text-gray-500">

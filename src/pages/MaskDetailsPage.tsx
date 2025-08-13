@@ -36,7 +36,7 @@ const MaskDetails: React.FC = () => {
 
   if (!mask) {
     return (
-      <div className="text-center text-gray-600 mt-20">Маска не найдена</div>
+      <div className="text-center text-white mt-20">Маска не найдена</div>
     );
   }
 
@@ -60,14 +60,14 @@ const MaskDetails: React.FC = () => {
   }));
 
   return (
-    <div className="min-w-full mx-auto bg-white min-h-screen">
+    <div className="min-w-full mx-auto bg-black min-h-screen">
       {/* Header */}
       <div className="flex items-center  py-4 border-b border-gray-100">
         <ArrowLeft
           onClick={() => navigate("/catalog")}
-          className="w-6 h-6 text-gray-600"
+          className="w-6 h-6 text-white"
         />
-        <p className="text-[22px] font-medium text-gray-900 ml-4">
+        <p className="text-[22px] font-medium text-white ml-4">
           Детали маски
         </p>
       </div>
@@ -82,93 +82,93 @@ const MaskDetails: React.FC = () => {
       <div className=" pb-6">
         {/* Mask Name and Add Button */}
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-900">{mask.name}</h2>
+          <h2 className="text-xl font-semibold text-white">{mask.name}</h2>
       
         </div>
 
         {/* Description */}
         {mask.description && (
-          <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+          <p className="text-sm text-white mb-6 leading-relaxed">
             {mask.description}
           </p>
         )}
 
         {/* Characteristics */}
         <div className="mb-6">
-          <h3 className="text-base font-medium text-gray-900 mb-3">
+          <h3 className="text-base font-medium text-white mb-3">
             Характеристики
           </h3>
           <div className="space-y-3">
             {mask.weight && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Вес</span>
-                <span className="text-sm text-gray-900">{mask.weight}</span>
+                <span className="text-sm text-white">Вес</span>
+                <span className="text-sm text-white">{mask.weight}</span>
               </div>
             )}
             {mask.viewArea && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Область обзора</span>
-                <span className="text-sm text-gray-900">{mask.viewArea}</span>
+                <span className="text-sm text-white">Область обзора</span>
+                <span className="text-sm text-white">{mask.viewArea}</span>
               </div>
             )}
             {mask.sensors && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Сенсоры</span>
-                <span className="text-sm text-gray-900">{mask.sensors}</span>
+                <span className="text-sm text-white">Сенсоры</span>
+                <span className="text-sm text-white">{mask.sensors}</span>
               </div>
             )}
             {mask.power && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Питание</span>
-                <span className="text-sm text-gray-900">{mask.power}</span>
+                <span className="text-sm text-white">Питание</span>
+                <span className="text-sm text-white">{mask.power}</span>
               </div>
             )}
             {mask.shadeRange && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-white">
                   Диапазон затемнения
                 </span>
-                <span className="text-sm text-gray-900">{mask.shadeRange}</span>
+                <span className="text-sm text-white">{mask.shadeRange}</span>
               </div>
             )}
             {mask.material && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Материал</span>
-                <span className="text-sm text-gray-900">{mask.material}</span>
+                <span className="text-sm text-white">Материал</span>
+                <span className="text-sm text-white">{mask.material}</span>
               </div>
             )}
             {mask.price && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Цена</span>
-                <span className="text-sm text-gray-900">{mask.price}</span>
+                <span className="text-sm text-white">Цена</span>
+                <span className="text-sm text-white">{mask.price}</span>
               </div>
             )}
             {mask.installment && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Рассрочка</span>
-                <span className="text-sm text-gray-900">
+                <span className="text-sm text-white">Рассрочка</span>
+                <span className="text-sm text-white">
                   {mask.installment}
                 </span>
               </div>
             )}
             {mask.size && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Размер</span>
-                <span className="text-sm text-gray-900">{mask.size}</span>
+                <span className="text-sm text-white">Размер</span>
+                <span className="text-sm text-white">{mask.size}</span>
               </div>
             )}
             {mask.days && (
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Срок</span>
-                <span className="text-sm text-gray-900">{mask.days}</span>
+                <span className="text-sm text-white">Срок</span>
+                <span className="text-sm text-white">{mask.days}</span>
               </div>
             )}
             {mask.extraFields && mask.extraFields.length > 0 && (
               <>
                 {mask.extraFields.map((field) => (
                   <div key={field.id} className="flex justify-between">
-                    <span className="text-sm text-gray-600">{field.key}</span>
-                    <span className="text-sm text-gray-900">{field.value}</span>
+                    <span className="text-sm text-white">{field.key}</span>
+                    <span className="text-sm text-white">{field.value}</span>
                   </div>
                 ))}
               </>
@@ -179,7 +179,7 @@ const MaskDetails: React.FC = () => {
         {/* Features */}
         {mask.features && mask.features.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-base font-medium text-gray-900 mb-3">
+            <h3 className="text-base font-medium text-white mb-3">
               Особенности
             </h3>
             <div className="space-y-2">
@@ -196,10 +196,10 @@ const MaskDetails: React.FC = () => {
         {/* Reviews */}
         {reviews.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-base font-medium text-gray-900 mb-3">Отзывы</h3>
+            <h3 className="text-base font-medium text-white mb-3">Отзывы</h3>
             {/* Rating */}
             <div className="flex items-center mb-4">
-              <span className="text-2xl font-bold text-gray-900 mr-2">
+              <span className="text-2xl font-bold text-white mr-2">
                 {averageRating.toFixed(1)}
               </span>
               <div className="flex mr-2">
@@ -222,14 +222,14 @@ const MaskDetails: React.FC = () => {
             <div className="space-y-1 mb-4">
               {ratingDistribution.map(({ score, width }) => (
                 <div key={score} className="flex items-center text-xs">
-                  <span className="w-2 text-gray-600">{score}</span>
+                  <span className="w-2 text-white">{score}</span>
                   <div className="flex-1 mx-2 bg-gray-200 rounded-full h-2">
                     <div
                       className="bg-gray-800 h-2 rounded-full"
                       style={{ width }}
                     ></div>
                   </div>
-                  <span className="text-gray-600">{width}</span>
+                  <span className="text-white">{width}</span>
                 </div>
               ))}
             </div>
@@ -243,7 +243,7 @@ const MaskDetails: React.FC = () => {
                   {review.userName[0]}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-white">
                     {review.userName}
                   </p>
                   <p className="text-xs text-gray-500 mb-1">

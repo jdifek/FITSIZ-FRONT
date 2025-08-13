@@ -48,18 +48,18 @@ const VideoPage: React.FC = () => {
                 {/* {video.duration && (
                   <p className="text-xs text-gray-400">{video.duration}</p>
                 )} */}
-                <h3 className="text-sm font-semibold text-gray-800 leading-tight">
+                <h3 className="text-sm font-semibold text-white leading-tight">
                   {video.title}
                 </h3>
                 {video.description && (
-                  <p className="text-xs text-gray-600 mt-1">{video.description}</p>
+                  <p className="text-xs text-white mt-1">{video.description}</p>
                 )}
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-600">Видео пока недоступны</p>
+        <p className="text-center text-white">Видео пока недоступны</p>
       )}
 
       <div className="text-center mt-6">

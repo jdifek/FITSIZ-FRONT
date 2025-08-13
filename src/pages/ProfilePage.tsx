@@ -88,7 +88,7 @@ const ProfilePage: React.FC = () => {
     <div className="min-h-screen min-w-full">
       {/* Header */}
       <div className="flex flex-col items-center mb-8">
-        <h3 className="text-3xl font-bold text-gray-900 mb-6">
+        <h3 className="text-3xl font-bold text-white mb-6">
           Личный кабинет сварщика
         </h3>
         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center mb-4 shadow-lg">
@@ -108,7 +108,7 @@ const ProfilePage: React.FC = () => {
             </svg>
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-1">
+        <h2 className="text-2xl font-bold text-white mb-1">
           {user?.first_name || "User"}
         </h2>
         <p className="text-green-500 text-sm font-medium">
@@ -120,7 +120,7 @@ const ProfilePage: React.FC = () => {
       <div className="space-y-6 ">
         {/* Телефон */}
         <div>
-          <label className="block text-gray-900 font-medium mb-3 text-base">
+          <label className="block text-white font-medium mb-3 text-base">
             Номер Телефона{" "}
           </label>
           <div className="bg-green-50 rounded-xl p-4">
@@ -136,7 +136,7 @@ const ProfilePage: React.FC = () => {
 
         {/* Email */}
         <div>
-          <label className="block text-gray-900 font-medium mb-3 text-base">
+          <label className="block text-white font-medium mb-3 text-base">
             Email Aдрес
           </label>
           <div className="bg-green-50 rounded-xl p-4">
@@ -152,7 +152,7 @@ const ProfilePage: React.FC = () => {
 
         {/* Выбор маски */}
         <div>
-          <label className="block text-gray-900 font-medium mb-3 text-base">
+          <label className="block text-white font-medium mb-3 text-base">
             Моя маска
           </label>
           <div className="flex gap-1">
@@ -244,13 +244,13 @@ const ProfilePage: React.FC = () => {
                     Нет изображения
                   </div>
                 )}
-                <h4 className="text-sm font-medium text-gray-800">{mask.name}</h4>
+                <h4 className="text-sm font-medium text-black">{mask.name}</h4>
                 {mask.price && <p className="text-sm text-gray-500">{mask.price}</p>}
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-600">Здесь пока нет масок</p>
+          <p className="text-center text-white">Здесь пока нет масок</p>
         )}
       </div>
 

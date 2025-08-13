@@ -72,8 +72,6 @@ const AppContent: React.FC = () => {
   const imagesLoaded = useImagePreloader(["/2.1.png", "/image.png"]);
 
   // Определим фон в зависимости от текущего пути
-  const isWelcomePage = location.pathname === "/welcome";
-  const backgroundClass = isWelcomePage ? "bg-black text-white" : "bg-white text-gray-900";
 
   // Показываем загрузку пока изображения не загружены
   if (!imagesLoaded) {
@@ -81,13 +79,13 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${backgroundClass}`}>
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 bg-black text-white`}>
       {/* Хедер */}
-      <header className="w-full mt-20 shadow-md">
+      <header className="bg-black !text-white w-full mt-20 shadow-md">
         <div className="max-w-4xl mx-auto px-4 py-2 flex justify-between items-center">
           <Link to={'/welcome'} className="flex items-center gap-3">
             <img 
-              src={isWelcomePage ? "/2.1.png" : "/image.png"} 
+              src={'/2.1.png'} 
               className="w-30 h-14 transition-opacity duration-300" 
               alt="Logo"
             />
@@ -96,7 +94,7 @@ const AppContent: React.FC = () => {
       </header>
 
       {/* Контент */}
-      <main className="flex-1 flex flex-col items-center justify-start p-6 px-[10px] pb-24 max-w-md mx-auto w-full">
+      <main className="flex-1  flex flex-col items-center justify-start p-6 px-[10px] pb-24 max-w-md mx-auto w-full">
         <Routes>
           <Route path="/details/:id" element={<MaskDetailsPage />} />
           <Route path="/quiz" element={<QuizPage />} />
