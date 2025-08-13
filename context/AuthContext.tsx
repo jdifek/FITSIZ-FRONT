@@ -6,6 +6,7 @@ import api from "../src/api/api";
 export interface User {
   id?: number;
   telegramId: string;
+  firstName?: string;
   first_name?: string;
   phone?: string;
   email?: string;
@@ -32,8 +33,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       api
         .registerUser(user.id.toString(), user.first_name || user.username || "User")
         .then((registeredUser) => {
-          setUser(registeredUser);
-        })
+          setUser({
+            ...registeredUser,
+            first_name: registeredUser.firstName // для совместимости
+          });
+                  })
         .catch((error) => {
           console.error("User context login error:", error.message);
         });
