@@ -202,12 +202,12 @@ const ProfilePage: React.FC = () => {
         <div className="mt-6 space-y-4">
           <a
             href="/video"
-            className="block w-full text-center py-2 bg-blue-500 text-white rounded-lg"
+            className="block w-full text-center py-2 bg-[#42BA1A] text-white rounded-lg"
           >
             Как настроить маску
           </a>
           <button
-            className="w-full py-2 bg-gray-800 text-white rounded-lg"
+            className="w-full py-2 bg-[#42BA1A] text-white rounded-lg"
             onClick={() => {
               if (
                 confirm(
@@ -259,13 +259,13 @@ const ProfilePage: React.FC = () => {
         <button
           onClick={handleUpdate}
           disabled={!user?.telegramId || loading}
-          className="w-full !bg-green-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:bg-green-600 transition-colors disabled:opacity-50"
+          className="w-full !bg-[#42BA1A] text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:bg-green-600 transition-colors disabled:opacity-50"
         >
           {loading ? "Загрузка..." : "Обновить"}
         </button>
         <button
           onClick={() => navigate("/welcome")}
-          className="w-full !bg-blue-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-600 transition-colors"
+          className="w-full  text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-600 transition-colors"
         >
           Назад
         </button>

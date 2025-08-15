@@ -37,14 +37,14 @@ const VideoDetail: React.FC = () => {
     );  }
 
   if (!video) {
-    return <div className="text-center text-gray-600 mt-20">Видео не найдено</div>;
+    return <div className="text-center text-white mt-20">Видео не найдено</div>;
   }
 
   return (
-    <div className="!min-w-full bg-white min-h-screen">
+    <div className="!min-w-full bg-black min-h-screen">
       <div className="flex items-center px-4 py-4 border-b border-gray-100">
-        <ArrowLeft onClick={() => navigate("/video")} className="w-6 h-6 text-gray-600" />
-        <p className="text-[22px] font-medium text-gray-900 ml-4">{video.title}</p>
+        <ArrowLeft onClick={() => navigate("/video")} className="w-6 h-6 text-white" />
+        <p className="text-[22px] font-medium text-white ml-4">{video.title}</p>
       </div>
       <div className="">
         {video.url ? (
@@ -65,12 +65,12 @@ const VideoDetail: React.FC = () => {
             className="w-full h-64 object-cover rounded-lg mb-4"
           />
         )}
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">{video.title}</h2>
+        <h2 className="text-xl font-semibold text-white mb-2">{video.title}</h2>
         {video.description && (
-          <p className="text-sm text-gray-600 mb-4">{video.description}</p>
+          <p className="text-sm text-white mb-4">{video.description}</p>
         )}
         {video.duration && (
-          <p className="text-sm text-gray-500">Длительность: {video.duration}</p>
+          <p className="text-sm text-white">Длительность: {video.duration}</p>
         )}
       </div>
     </div>
