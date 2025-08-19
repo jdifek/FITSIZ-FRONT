@@ -2,36 +2,45 @@ import axios from "axios";
 import type { User } from "../../context/AuthContext";
 
 // Типы
-type MasksType = {
+export type ExtraFieldType = {
+  id: number;
+  key: string;
+  value: string;
+};
+
+export type FeatureType = {
   id: number;
   name: string;
-  instructions?: string;
-  imageUrl?: string;
-  price?: string;
-  weight?: string;
-  viewArea?: string;
-  sensors?: number;
-  power?: string;
-  shadeRange?: string;
-  material?: string;
-  description?: string;
-  link?: string;
-  installment?: string;
-  size?: string;
-  days?: string;
-  features?: { id: number; name: string }[];
-  reviews?: {
-    id: number;
-    userName: string;
-    rating: number;
-    comment?: string;
-    createdAt: Date;
-  }[];
-  extraFields?: {
-    id: number;
-    key: string;
-    value: string;
-  }[];
+};
+
+export type ReviewType = {
+  id: number;
+  userName: string;
+  rating: number;
+  comment?: string;
+  createdAt: string;
+};
+
+export type MasksType = {
+  id: number;
+  name: string;
+  instructions: string | null;
+  imageUrl: string | null;
+  price: number | null;
+  weight: number | null;
+  viewArea: string | null;
+  sensors: number | null;
+  power: string | null;
+  shadeRange: string | null;
+  material: string | null;
+  description: string | null;
+  link: string | null;
+  installment: string | null;
+  size: string | null;
+  days: number | null;
+  features: FeatureType[];
+  reviews: ReviewType[];
+  ExtraField: ExtraFieldType[];
 };
 
 type VideoType = {
@@ -110,4 +119,4 @@ export default {
 };
 
 // Экспорт типов
-export type { VideoType, MasksType };
+export type { VideoType };
