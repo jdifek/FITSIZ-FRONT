@@ -1,7 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import api, { type MasksType } from "../api/api";
+
+const fieldLabels: Record<string, string> = {
+  viewArea: "Область обзора",
+  sensors: "Сенсоры",
+  power: "Питание",
+  shadeRange: "Диапазон затемнения",
+  weight: "Вес",
+  material: "Материал",
+  batteryIndicator: "Индикатор батареи",
+  hdColorTech: "HD Color Tech",
+  memoryModes: "Режимы памяти",
+  weldingTypes: "Типы сварки",
+  gradientFunction: "Функция градиента",
+  testButton: "Кнопка теста",
+  sFireProtection: "Защита от искр",
+  delayAdjustment: "Регулировка задержки",
+  sensitivityAdjustment: "Регулировка чувствительности",
+  operatingTemp: "Рабочая температура",
+  opticalClass: "Оптический класс",
+  responseTime: "Время срабатывания",
+  headband: "Наголовное крепление",
+  packageHeight: "Высота упаковки",
+  packageLength: "Длина упаковки",
+  packageWidth: "Ширина упаковки",
+};
 
 const MaskDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,9 +59,7 @@ const MaskDetails: React.FC = () => {
   }
 
   if (!mask) {
-    return (
-      <div className="text-center text-white mt-20">Маска не найдена</div>
-    );
+    return <div className="text-center text-white mt-20">Маска не найдена</div>;
   }
 
   // Reviews
@@ -85,43 +109,19 @@ const MaskDetails: React.FC = () => {
             Характеристики
           </h3>
           <div className="space-y-3">
-            {mask.viewArea && (
-              <div className="flex justify-between">
-                <span className="text-sm text-white">Область обзора</span>
-                <span className="text-sm text-white">{mask.viewArea}</span>
-              </div>
-            )}
-            {mask.sensors && (
-              <div className="flex justify-between">
-                <span className="text-sm text-white">Сенсоры</span>
-                <span className="text-sm text-white">{mask.sensors}</span>
-              </div>
-            )}
-            {mask.power && (
-              <div className="flex justify-between">
-                <span className="text-sm text-white">Питание</span>
-                <span className="text-sm text-white">{mask.power}</span>
-              </div>
-            )}
-            {mask.shadeRange && (
-              <div className="flex justify-between">
-                <span className="text-sm text-white">Диапазон затемнения</span>
-                <span className="text-sm text-white">{mask.shadeRange}</span>
-              </div>
-            )}
-            {mask.weight && (
-              <div className="flex justify-between">
-                <span className="text-sm text-white">Вес</span>
-                <span className="text-sm text-white">{mask.weight} кг</span>
-              </div>
-            )}
-            {mask.material && (
-              <div className="flex justify-between">
-                <span className="text-sm text-white">Материал</span>
-                <span className="text-sm text-white">{mask.material}</span>
-              </div>
-            )}
-            {mask.ExtraField.length > 0 &&
+            {Object.entries(fieldLabels).map(([key, label]) => {
+              const value = (mask as any)[key];
+              if (!value) return null;
+              return (
+                <div key={key} className="flex justify-between">
+                  <span className="text-sm text-white">{label}</span>
+                  <span className="text-sm text-white">{value}</span>
+                </div>
+              );
+            })}
+
+            {/* Extra поля */}
+            {mask.ExtraField?.length > 0 &&
               mask.ExtraField.map((field) => (
                 <div key={field.id} className="flex justify-between">
                   <span className="text-sm text-white">{field.key}</span>
@@ -151,10 +151,17 @@ const MaskDetails: React.FC = () => {
             <h3 className="text-base font-medium text-white mb-3">
               Отзывы ({totalReviews})
             </h3>
-            <p className="text-white mb-2">Средняя оценка: {averageRating.toFixed(1)} ⭐</p>
+            <p className="text-white mb-2">
+              Средняя оценка: {averageRating.toFixed(1)} ⭐
+            </p>
             {reviews.map((review) => (
-              <div key={review.id} className="mb-3 border-b border-gray-700 pb-2">
-                <p className="text-sm font-medium text-white">{review.userName}</p>
+              <div
+                key={review.id}
+                className="mb-3 border-b border-gray-700 pb-2"
+              >
+                <p className="text-sm font-medium text-white">
+                  {review.userName}
+                </p>
                 <p className="text-xs text-gray-400">
                   {new Date(review.createdAt).toLocaleDateString()}
                 </p>

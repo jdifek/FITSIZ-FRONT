@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
-import { FaUser, FaVideo, FaList } from "react-icons/fa";
+import {  FaVideo, FaList, FaTelegramPlane } from "react-icons/fa";
+import { FaMessage } from "react-icons/fa6";
 
 const WelcomePage: React.FC = () => {
   const { user } = useUserContext();
@@ -9,24 +10,43 @@ const WelcomePage: React.FC = () => {
 
   const buttons = [
     {
+      label: "Настроить свою маску",
+      icon: <FaVideo className="text-2xl text-black" />,
+      path: "/video",
+      external: false,
+    },
+    {
+      label: "Помощник по сварке",
+      icon: <FaTelegramPlane className="text-2xl text-black" />,
+      path: "https://t.me/fitsiz_assistant_bot",
+      external: true, // 👈 теперь внешняя ссылка
+    },
+    {
+      label: "Чат поддержки",
+      icon: <FaMessage className="text-2xl text-black" />,
+      path: "https://t.me/fitsiz_support_bot",
+      external: true, // 👈 теперь внешняя ссылка
+    },
+    {
       label: "Каталог",
       icon: <FaList className="text-2xl text-black" />,
       path: "/catalog",
-      color: "from-green-400 to Universo-600",
-    },
-    {
-      label: "Видео",
-      icon: <FaVideo className="text-2xl text-black" />,
-      path: "/video",
-      color: "from-green-400 to Universo-600",
-    },
-    {
-      label: "Профиль",
-      icon: <FaUser className="text-2xl text-black" />,
-      path: "/profile",
-      color: "from-green-400 to Universo-600",
+      external: false,
     },
   ];
+  const openLink = (path: string, external?: boolean) => {
+    if (external) {
+      if (window.Telegram?.WebApp) {
+        // Миниапп → открываем в Telegram
+        window.Telegram.WebApp.openTelegramLink(path);
+      } else {
+        // Браузер → открываем в новой вкладке
+        window.open(path, "_blank");
+      }
+    } else {
+      navigate(path);
+    }
+  };
 
   return (
     <div className="px-4 py-10 max-w-md mx-auto">
@@ -41,10 +61,10 @@ const WelcomePage: React.FC = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 gap-5">
-        {buttons.map(({ label, icon, path }) => (
+        {buttons.map(({ label, icon, path, external }) => (
           <div
             key={label}
-            onClick={() => navigate(path)}
+            onClick={() => openLink(path, external)}
             className="flex items-center gap-4 p-4 rounded-2xl shadow-lg cursor-pointer bg-[#42BA1A] transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
             <div className="bg-white rounded-full p-3 shadow-inner">{icon}</div>
