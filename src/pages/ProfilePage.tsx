@@ -175,22 +175,7 @@ const ProfilePage: React.FC = () => {
         </div>
 
         {/* Ссылки и кнопки */}
-        <div className="mt-6 space-y-4">
-        <button
-  onClick={() => {
-    if (!selectedMaskId) {
-      alert("Выберите маску перед сохранением");
-      return;
-    }
-    handleUpdate();
-  }}
-  disabled={loading}
-  className="w-full py-3 bg-[#42BA1A] text-white rounded-lg font-semibold text-lg shadow-lg hover:bg-green-600 transition-colors disabled:opacity-50"
->
-  {loading ? "Загрузка..." : "Сохранить"}
-</button>
-
-</div>
+        
 
 
         {/* Секция "Мои маски" */}
