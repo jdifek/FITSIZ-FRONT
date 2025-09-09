@@ -95,7 +95,16 @@ const MaskDetails: React.FC = () => {
         <h2 className="text-xl font-semibold text-white mt-4 text-center">
           {mask.name}
         </h2>
-
+        <div className="mt-8 px-4">
+          <a
+            href="https://fitsiz.ru/buy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-3 text-center bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
+          >
+            Где купить
+          </a>
+        </div>
         {/* Описание */}
         {mask.description && (
           <p className="text-sm text-gray-300 mt-2 text-center px-4">

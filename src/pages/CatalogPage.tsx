@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api, { type MasksType } from "../api/api";
 
 const CatalogPage: React.FC = () => {
-  const [likedItems, setLikedItems] = useState<Set<number>>(new Set());
   const [popularProducts, setPopularProducts] = useState<MasksType[]>([]);
-  const [recommendedProducts, setRecommendedProducts] = useState<MasksType[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -15,8 +12,7 @@ const CatalogPage: React.FC = () => {
       .getMasks()
       .then((data: MasksType[]) => {
         // Split masks into popular (first 4) and recommended (rest)
-        setPopularProducts(data.slice(0, 4));
-        setRecommendedProducts(data.slice(4));
+        setPopularProducts(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -29,17 +25,6 @@ const CatalogPage: React.FC = () => {
     navigate(`/details/${id}`);
   };
 
-  const toggleLike = (id: number) => {
-    setLikedItems((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      return newSet;
-    });
-  };
 
   if (loading) {
     return (
@@ -91,11 +76,11 @@ const CatalogPage: React.FC = () => {
                   className="w-full h-40 object-cover rounded-2xl bg-gray-100"
                 />
               </div>
-              <div className="mb-1">
+              {/* <div className="mb-1">
                 <span className="text-lg font-bold text-white">
                   {product.price || "Цена не указана"}
                 </span>
-              </div>
+              </div> */}
               {product.installment && (
                 <div className="mb-2">
                   <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded">
@@ -106,71 +91,18 @@ const CatalogPage: React.FC = () => {
               <h3 className="text-sm font-medium text-white mb-2 leading-tight">
                 {product.name}
               </h3>
-              <div className="flex items-center gap-2 text-xs text-gray-500">
+              {/* <div className="flex items-center gap-2 text-xs text-gray-500">
                 <Heart className="w-3 h-3 text-red-400" />
                 {product.size && <span>{product.size}</span>}
                 {product.size && product.days && <span>•</span>}
                 {product.days && <span>{product.days}</span>}
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
 
         {/* Recommended Section */}
-        {recommendedProducts.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold text-white mb-4">Рекомендуемое</h2>
-            <div className="grid grid-cols-2 gap-4">
-              {recommendedProducts.map((product) => (
-                <div
-                  key={product.id}
-                  onClick={() => handleProductClick(product.id)}
-                  className="cursor-pointer"
-                >
-                  <div className="relative mb-3">
-                    <Heart
-                      className={`w-6 h-6 text-red-500 absolute top-2 right-2uale top-2 right-2 ${
-                        likedItems.has(product.id)
-                          ? "fill-red-500 text-red-500"
-                          : "text-gray-400"
-                      }`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleLike(product.id);
-                      }}
-                    />
-                    <img
-                      src={product.imageUrl || "https://via.placeholder.com/150"}
-                      alt={product.name}
-                      className="w-full h-40 object-cover rounded-2xl bg-gray-100"
-                    />
-                  </div>
-                  <div className="mb-1">
-                    <span className="text-lg font-bold text-white">
-                      {product.price || "Цена не указана"}
-                    </span>
-                  </div>
-                  {product.installment && (
-                    <div className="mb-2">
-                      <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded">
-                        {product.installment} в сплит
-                      </span>
-                    </div>
-                  )}
-                  <h3 className="text-sm font-medium text-white mb-2 leading-tight">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <Heart className="w-3 h-3 text-red-400" />
-                    {product.size && <span>{product.size}</span>}
-                    {product.size && product.days && <span>•</span>}
-                    {product.days && <span>{product.days}</span>}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+       
       </div>
 
       <div className="text-center mt-6">

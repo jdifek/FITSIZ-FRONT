@@ -26,7 +26,7 @@ const QuizPage: React.FC = () => {
           "Вы переходите на официальный чат-бот FITSIZ, который поможет Вам выбрать нужную маску"
         );
         if (wantsHelp) {
-          window.location.href = "https://t.me/fitsizpicker_bot";
+          window.location.href = "https://t.me/fitsiz_support_bot";
         } else {
           navigate("/welcome");
         }

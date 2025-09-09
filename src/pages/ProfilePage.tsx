@@ -118,37 +118,7 @@ const ProfilePage: React.FC = () => {
 
       {/* Поля формы */}
       <div className="space-y-6 ">
-        {/* Телефон */}
-        <div>
-          <label className="block text-white font-medium mb-3 text-base">
-            Номер Телефона{" "}
-          </label>
-          <div className="bg-green-50 rounded-xl p-4">
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full bg-transparent text-green-600 placeholder-green-400 text-base focus:outline-none"
-              placeholder="+7..."
-            />
-          </div>
-        </div>
-
-        {/* Email */}
-        <div>
-          <label className="block text-white font-medium mb-3 text-base">
-            Email Aдрес
-          </label>
-          <div className="bg-green-50 rounded-xl p-4">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-transparent text-green-600 placeholder-green-400 text-base focus:outline-none"
-              placeholder="example@mail.com"
-            />
-          </div>
-        </div>
+      
 
         {/* Выбор маски */}
         <div>
@@ -174,22 +144,28 @@ const ProfilePage: React.FC = () => {
                   ))}
               </select>
             </div>
-            <button
-              className="ml-4 px-1 py-1 bg-black text-white text-sm rounded-lg"
-              onClick={async () => {
-                if (!selectedMaskId || !user?.telegramId) return;
+            {selectedMaskId && (
+  <button
+    className="ml-4 px-3 py-2 bg-black text-white text-sm rounded-lg"
+    onClick={async () => {
+      if (!selectedMaskId || !user?.telegramId) {
+        alert("Выберите маску");
+        return;
+      }
 
-                try {
-                  await api.addUserMask(user.telegramId, selectedMaskId);
-                  const updatedUserMasks = await api.getUserMasks(user.telegramId);
-                  setUserMasks(Array.isArray(updatedUserMasks) ? updatedUserMasks : []);
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            >
-              Добавить еще
-            </button>
+      try {
+        await api.addUserMask(user.telegramId, selectedMaskId);
+        const updatedUserMasks = await api.getUserMasks(user.telegramId);
+        setUserMasks(Array.isArray(updatedUserMasks) ? updatedUserMasks : []);
+      } catch (error) {
+        console.log(error);
+      }
+    }}
+  >
+    Добавить ещё
+  </button>
+)}
+
           </div>
           {selectedMaskId && currentMaskName && (
             <p className="text-center text-green-500 text-sm mt-3 font-medium">
@@ -200,27 +176,22 @@ const ProfilePage: React.FC = () => {
 
         {/* Ссылки и кнопки */}
         <div className="mt-6 space-y-4">
-          <a
-            href="/video"
-            className="block w-full text-center py-2 bg-[#42BA1A] text-white rounded-lg"
-          >
-            Как настроить маску
-          </a>
-          <button
-            className="w-full py-2 bg-[#42BA1A] text-white rounded-lg"
-            onClick={() => {
-              if (
-                confirm(
-                  "Вы переходите на официального чат-бота FITSIZ, который поможет Вам сделать первые шаги в сварке"
-                )
-              ) {
-                window.location.href = "https://t.me/fitsiz_assistant_bot";
-              }
-            }}
-          >
-            Как начать варить?
-          </button>
-        </div>
+        <button
+  onClick={() => {
+    if (!selectedMaskId) {
+      alert("Выберите маску перед сохранением");
+      return;
+    }
+    handleUpdate();
+  }}
+  disabled={loading}
+  className="w-full py-3 bg-[#42BA1A] text-white rounded-lg font-semibold text-lg shadow-lg hover:bg-green-600 transition-colors disabled:opacity-50"
+>
+  {loading ? "Загрузка..." : "Сохранить"}
+</button>
+
+</div>
+
 
         {/* Секция "Мои маски" */}
         <h2 className="text-2xl font-bold text-green-700 mb-6">Мои маски</h2>

@@ -3,9 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import api, { type VideoType } from "../api/api";
 
+interface RutubeVideoAPIResponse {
+  video_files: { url: string; type: string }[];
+}
+
 const VideoDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [video, setVideo] = useState<VideoType | null>(null);
+  const [mp4Url, setMp4Url] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -17,6 +22,24 @@ const VideoDetail: React.FC = () => {
           const foundVideo = data.find((v) => v.id === parseInt(id));
           setVideo(foundVideo || null);
           setLoading(false);
+
+          // Если есть RuTube URL, получаем mp4 через API
+          if (foundVideo?.url) {
+            
+            console.log(foundVideo?.url);
+            const iframeSrcMatch = foundVideo.url.match(/rutube\.ru\/play\/embed\/([a-f0-9]+)/);
+            if (iframeSrcMatch) {
+              const rutubeId = iframeSrcMatch[1];
+              console.log("RuTube ID:", rutubeId);
+              fetch(`https://rutube.ru/api/video/${rutubeId}/?format=json`)
+                .then(res => res.json())
+                .then((data: RutubeVideoAPIResponse) => {
+                  const mp4 = data.video_files.find(file => file.type === "video/mp4");
+                  if (mp4) setMp4Url(mp4.url);
+                })
+                .catch(err => console.error("Не удалось получить mp4:", err));
+            }
+          }
         })
         .catch((error) => {
           console.error("Ошибка загрузки видео:", error);
@@ -24,12 +47,6 @@ const VideoDetail: React.FC = () => {
         });
     }
   }, [id]);
-
-  // Вырезаем src из строки iframe, которую присылает бэкенд
-  function extractSrc(iframeString: string): string | null {
-    const match = iframeString.match(/src="([^"]+)"/);
-    return match ? match[1] : null;
-  }
 
   if (loading) {
     return (
@@ -42,8 +59,6 @@ const VideoDetail: React.FC = () => {
   if (!video) {
     return <div className="text-center text-white mt-20">Видео не найдено</div>;
   }
-
-  const src = video.url ? extractSrc(video.url) : null;
 
   return (
     <div className="!min-w-full bg-black min-h-screen">
@@ -58,18 +73,17 @@ const VideoDetail: React.FC = () => {
 
       {/* Плеер и контент */}
       <div className="px-4 py-4">
-        {src ? (
-          <iframe
-            width={720} // хардкодим ширину
-            height={405} // хардкодим высоту
+        {mp4Url ? (
+          <video
+            width={720} // хардкод ширины
+            height={405} // хардкод высоты
+            controls
+            poster={video.thumbnailUrl}
             className="rounded-lg mb-4"
-            src={src}
-            title={video.title}
-            frameBorder="0"
-            allow="clipboard-write; autoplay"
-            allowFullScreen
-            style={{ maxWidth: "100%", height: "auto" }} // адаптив
-          />
+          >
+            <source src={mp4Url} type="video/mp4" />
+            Ваш браузер не поддерживает видео.
+          </video>
         ) : (
           <img
             src={video.thumbnailUrl || "https://via.placeholder.com/720x405"}

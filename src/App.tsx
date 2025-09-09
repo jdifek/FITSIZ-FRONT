@@ -19,7 +19,7 @@ const AppContent: React.FC = () => {
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 bg-black text-white`}>
       {/* Хедер */}
-      <header className="bg-black !text-white w-full mt-20 shadow-md">
+      <header className="bg-black flex justify-center !text-white w-full mt-20 shadow-md">
         <div className="max-w-4xl mx-auto px-4 py-2 flex justify-between items-center">
           <Link to={'/welcome'} className="flex items-center gap-3">
             <img 
