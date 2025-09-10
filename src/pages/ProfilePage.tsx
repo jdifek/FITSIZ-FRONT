@@ -92,22 +92,31 @@ const ProfilePage: React.FC = () => {
           Личный кабинет сварщика
         </h3>
         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center mb-4 shadow-lg">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              className="text-orange-800"
-            >
-              <circle cx="24" cy="18" r="8" fill="currentColor" opacity="0.8" />
-              <path
-                d="M12 36c0-6.627 5.373-12 12-12s12 5.373 12 12"
-                fill="currentColor"
-                opacity="0.8"
-              />
-            </svg>
-          </div>
-        </div>
+  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center overflow-hidden">
+    {user?.photoUrl || user?.photo_url ? (
+      <img
+        src={user.photoUrl || user.photo_url}
+        alt={user.first_name || "avatar"}
+        className="w-full h-full object-cover"
+      />
+    ) : (
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 48 48"
+        className="text-orange-800"
+      >
+        <circle cx="24" cy="18" r="8" fill="currentColor" opacity="0.8" />
+        <path
+          d="M12 36c0-6.627 5.373-12 12-12s12 5.373 12 12"
+          fill="currentColor"
+          opacity="0.8"
+        />
+      </svg>
+    )}
+  </div>
+</div>
+
         <h2 className="text-2xl font-bold text-white mb-1">
           {user?.first_name || "User"}
         </h2>
