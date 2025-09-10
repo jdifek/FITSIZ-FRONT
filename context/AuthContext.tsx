@@ -30,19 +30,24 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const handleLogin = (user: any) => {
+    const handleLogin = (tgUser: any) => {
       api
-        .registerUser(user.id.toString(), user.first_name || user.username || "User")
+        .registerUser(tgUser.id.toString(), tgUser.first_name || tgUser.username || "User")
         .then((registeredUser) => {
           setUser({
-            ...registeredUser,
-            first_name: registeredUser.firstName // для совместимости
+            ...registeredUser, // то, что вернул твой бэк
+            telegramId: tgUser.id.toString(),
+            first_name: tgUser.first_name || registeredUser.firstName,
+            username: tgUser.username || registeredUser.username,
+            photoUrl: tgUser.photo_url,   // 👈 нормализованное поле
+            photo_url: tgUser.photo_url,  // 👈 оставляем и оригинал
           });
-                  })
+        })
         .catch((error) => {
           console.error("User context login error:", error.message);
         });
     };
+    
 
     const tg = window.Telegram?.WebApp;
     if (tg) {
