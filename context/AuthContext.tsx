@@ -14,6 +14,7 @@ export interface User {
   maskId?: number | null;
   username?: string;
   photoUrl?: string;
+  photo_url?: string;
 }
 
 interface UserContextType {
