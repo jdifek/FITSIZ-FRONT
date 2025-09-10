@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
-import {  FaVideo, FaList, FaTelegramPlane } from "react-icons/fa";
+import { FaVideo, FaList, FaTelegramPlane } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 
 const WelcomePage: React.FC = () => {
@@ -54,6 +54,7 @@ const WelcomePage: React.FC = () => {
         <h2 className="text-3xl font-extrabold text-[#42BA1A]">
           Привет, {user?.first_name || "Гость"}!
         </h2>
+        <img src={user?.photoUrl} alt="photoUrl" className="w-10"/>
         <p className="mt-2 text-gray-500 text-sm">
           Добро пожаловать в
           <strong className="text-[#42BA1A]"> FITSIZ APP</strong> Официальная

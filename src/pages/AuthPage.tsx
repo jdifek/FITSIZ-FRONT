@@ -11,20 +11,27 @@ const AuthPage: React.FC = () => {
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
   
-    const handleLogin = (user: any) => {
+    const handleLogin = (tgUser: any) => {
       api
-        .registerUser(user.id.toString(), user.first_name || user.username || "User")
+        .registerUser(
+          tgUser.id.toString(),
+          tgUser.first_name || tgUser.username || "User"
+        )
         .then((registeredUser) => {
-          setUser(registeredUser);
+          // 👇 объединяем данные, чтобы не потерять имя/username/фото
+          setUser({ ...tgUser, ...registeredUser });
+          
           if (registeredUser.quiz) {
             navigate("/welcome");
           } else {
             navigate("/quiz");
-          }        })
+          }
+        })
         .catch((error) => {
           console.error("Login error:", error.message);
         });
     };
+    
   
     if (tg) {
       tg.ready();
