@@ -120,9 +120,7 @@ const ProfilePage: React.FC = () => {
         <h2 className="text-2xl font-bold text-white mb-1">
           {user?.first_name || "User"}
         </h2>
-        <p className="text-green-500 text-sm font-medium">
-          Обновите детали о вас
-        </p>
+      
       </div>
 
       {/* Поля формы */}
@@ -171,14 +169,14 @@ const ProfilePage: React.FC = () => {
       }
     }}
   >
-    Добавить ещё
+    Добавить маску
   </button>
 )}
 
           </div>
           {selectedMaskId && currentMaskName && (
             <p className="text-center text-green-500 text-sm mt-3 font-medium">
-              Current mask: {currentMaskName}
+              Вы выбрали маску: {currentMaskName}
             </p>
           )}
         </div>
@@ -198,17 +196,18 @@ const ProfilePage: React.FC = () => {
                 className="bg-white border rounded-xl p-3 shadow-sm hover:shadow-md transition text-left cursor-pointer"
                 onClick={() => navigate(`/details/${mask.id}`)}
               >
-                {mask.imageUrl ? (
-                  <img
-                    src={mask.imageUrl}
-                    alt={mask.name}
-                    className="w-full h-28 object-cover rounded-lg mb-2"
-                  />
-                ) : (
-                  <div className="w-full h-28 bg-gray-200 rounded-lg mb-2 flex items-center justify-center text-gray-400">
-                    Нет изображения
-                  </div>
-                )}
+               {mask.imageUrl ? (
+  <img
+    src={mask.imageUrl}
+    alt={mask.name}
+    className="w-full aspect-[3/4] object-cover rounded-lg mb-2"
+  />
+) : (
+  <div className="w-full aspect-[3/4] bg-gray-200 rounded-lg mb-2 flex items-center justify-center text-gray-400">
+    Нет изображения
+  </div>
+)}
+
                 <h4 className="text-sm font-medium text-black">{mask.name}</h4>
                 {mask.price && <p className="text-sm text-gray-500">{mask.price}</p>}
               </div>
@@ -226,7 +225,7 @@ const ProfilePage: React.FC = () => {
           disabled={!user?.telegramId || loading}
           className="w-full !bg-[#42BA1A] text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:bg-green-600 transition-colors disabled:opacity-50"
         >
-          {loading ? "Загрузка..." : "Обновить"}
+          {loading ? "Загрузка..." : "Сохранить"}
         </button>
         <button
           onClick={() => navigate("/welcome")}

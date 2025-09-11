@@ -70,11 +70,11 @@ const CatalogPage: React.FC = () => {
                     toggleLike(product.id);
                   }}
                 /> */}
-                <img
-                  src={product.imageUrl || "https://via.placeholder.com/150"}
-                  alt={product.name}
-                  className="w-full h-40 object-cover rounded-2xl bg-gray-100"
-                />
+             <img
+  src={product.imageUrl || "https://via.placeholder.com/150"}
+  alt={product.name}
+  className="w-full aspect-[3/4] object-cover rounded-2xl bg-gray-100"
+/>
               </div>
               {/* <div className="mb-1">
                 <span className="text-lg font-bold text-white">
