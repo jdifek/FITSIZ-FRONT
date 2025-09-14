@@ -3,14 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import api, { type VideoType } from "../api/api";
 
-interface RutubeVideoAPIResponse {
-  video_files: { url: string; type: string }[];
-}
-
 const VideoDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [video, setVideo] = useState<VideoType | null>(null);
-  const [mp4Url, setMp4Url] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -22,24 +17,6 @@ const VideoDetail: React.FC = () => {
           const foundVideo = data.find((v) => v.id === parseInt(id));
           setVideo(foundVideo || null);
           setLoading(false);
-
-          // Если есть RuTube URL, получаем mp4 через API
-          if (foundVideo?.url) {
-            
-            console.log(foundVideo?.url);
-            const iframeSrcMatch = foundVideo.url.match(/rutube\.ru\/play\/embed\/([a-f0-9]+)/);
-            if (iframeSrcMatch) {
-              const rutubeId = iframeSrcMatch[1];
-              console.log("RuTube ID:", rutubeId);
-              fetch(`https://rutube.ru/api/video/${rutubeId}/?format=json`)
-                .then(res => res.json())
-                .then((data: RutubeVideoAPIResponse) => {
-                  const mp4 = data.video_files.find(file => file.type === "video/mp4");
-                  if (mp4) setMp4Url(mp4.url);
-                })
-                .catch(err => console.error("Не удалось получить mp4:", err));
-            }
-          }
         })
         .catch((error) => {
           console.error("Ошибка загрузки видео:", error);
@@ -60,6 +37,13 @@ const VideoDetail: React.FC = () => {
     return <div className="text-center text-white mt-20">Видео не найдено</div>;
   }
 
+  // Подставляем фиксированные размеры в iframe
+  const fixedIframe = video.url
+    ? video.url
+        .replace(/width="[^"]*"/, 'width="720"')
+        .replace(/height="[^"]*"/, 'height="405"')
+    : "";
+
   return (
     <div className="!min-w-full bg-black min-h-screen">
       {/* Хедер */}
@@ -73,22 +57,18 @@ const VideoDetail: React.FC = () => {
 
       {/* Плеер и контент */}
       <div className="px-4 py-4">
-        {mp4Url ? (
-          <video
-            width={720} // хардкод ширины
-            height={405} // хардкод высоты
-            controls
-            poster={video.thumbnailUrl}
+        {video.url ? (
+          <div
             className="rounded-lg mb-4"
-          >
-            <source src={mp4Url} type="video/mp4" />
-            Ваш браузер не поддерживает видео.
-          </video>
+            dangerouslySetInnerHTML={{ __html: fixedIframe }}
+          ></div>
         ) : (
           <img
             src={video.thumbnailUrl || "https://via.placeholder.com/720x405"}
             alt={video.title}
-            className="w-full h-64 object-cover rounded-lg mb-4"
+            width={720}
+            height={405}
+            className="rounded-lg mb-4 object-cover"
           />
         )}
 
