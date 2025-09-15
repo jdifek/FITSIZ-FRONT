@@ -37,12 +37,6 @@ const VideoDetail: React.FC = () => {
     return <div className="text-center text-white mt-20">Видео не найдено</div>;
   }
 
-  // Подставляем фиксированные размеры в iframe
-  const fixedIframe = video.url
-    ? video.url
-        .replace(/width="[^"]*"/, 'width="720"')
-        .replace(/height="[^"]*"/, 'height="405"')
-    : "";
 
   return (
     <div className="!min-w-full bg-black min-h-screen">
@@ -58,17 +52,24 @@ const VideoDetail: React.FC = () => {
       {/* Плеер и контент */}
       <div className="px-4 py-4">
         {video.url ? (
-          <div
-            className="rounded-lg mb-4"
-            dangerouslySetInnerHTML={{ __html: fixedIframe }}
-          ></div>
+        <div className="relative w-full aspect-video rounded-lg mb-4">
+        <div
+          className="absolute top-0 left-0 w-full h-full"
+          dangerouslySetInnerHTML={{
+            __html: video.url
+              ?.replace(/width="[^"]*"/, 'width="100%"')
+              .replace(/height="[^"]*"/, 'height="100%"') || "",
+          }}
+        />
+      </div>
+      
         ) : (
           <img
             src={video.thumbnailUrl || "https://via.placeholder.com/720x405"}
             alt={video.title}
             width={720}
             height={405}
-            className="rounded-lg mb-4 object-cover"
+            className="rounded-lg mb-4 !w-full object-cover"
           />
         )}
 
